@@ -1,0 +1,17 @@
+@function setLineHeight($lh, $fz) {
+  @return calc($lh / $fz);
+}
+
+@mixin font($fz: 12px, $lh: 15px, $ls: 0.02em, $fw: 500, $fs: normal) {
+  font-size: $fz;
+  line-height: setLineHeight($lh, $fz);
+  letter-spacing: $ls;
+  font-weight: $fw;
+  font-style: $fs;
+}
+
+@mixin flex($d: flex, $jc: center, $ai: center) {
+  display: $d;
+  justify-content: $jc;
+  align-items: $ai;
+}

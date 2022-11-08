@@ -1,0 +1,5 @@
+@import "./styles/utils/mixins";
+
+.app {
+  @include font(56px, 60px);
+}
