@@ -1,0 +1,7 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.accent {
+  @include font(14px, 21px);
+  color: $clr-accent-form;
+}

@@ -1,0 +1,24 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.item {
+  @include flex(flex-start, baseline);
+
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+}
+
+.text {
+  margin-left: 12px;
+  @include font(14px, 17px);
+  color: $clr-gray-support;
+
+  @include mq(tablet) {
+    @include font(16px, 20px);
+  }
+
+  @include mq(desktop) {
+    @include font(18px, 21px);
+  }
+}

@@ -1,0 +1,41 @@
+@import "../../styles/base/variables";
+@import "../../styles//utils/mixins";
+
+.intro {
+  padding: 32px 0;
+  @include mq(tablet) {
+    padding: 64px 140px;
+  }
+
+  @include mq(desktop) {
+    padding: 64px 230px 240px;
+  }
+}
+
+.header {
+  @include font(34px, 38px);
+  font-family: $font-brand;
+  text-align: center;
+}
+
+.subHeader {
+  margin-top: 32px;
+  margin-bottom: 14px;
+  @include font(20px, 38px);
+
+  @include mq(tablet) {
+    margin-top: 48px;
+  }
+}
+
+.subHeaderLower {
+  @extend .subHeader;
+
+  @include mq(mobile) {
+    margin-top: 24px;
+  }
+
+  @include mq(tablet) {
+    margin-top: 32px;
+  }
+}

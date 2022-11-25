@@ -1,0 +1,128 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.btns {
+  margin-top: 60px;
+  @include flex(space-between);
+
+  @include mq(tablet) {
+    @include flex(space-evenly);
+  }
+}
+
+.loginBtn {
+  padding: 16px 32px;
+  border: 1px solid $clr-accent;
+  @include font(18px, 24px, 500);
+  color: $clr-accent;
+  background-color: transparent;
+  animation: moveUp 2000ms ease-in-out;
+  transition: color $transition, background-color $transition;
+
+  &:hover,
+  &:focus {
+    color: $clr-white;
+    background-color: $clr-accent;
+  }
+
+  @include mq(tablet) {
+    animation: moveLeftTablet 2000ms cubic-bezier(0.92, 0.1, 0.9, 1);
+  }
+
+  @include mq(desktop) {
+    animation-name: moveLeftDesktop;
+  }
+}
+
+.registerBtn {
+  @extend .loginBtn;
+  color: $clr-white;
+  background-color: $clr-accent;
+  animation-name: moveDown;
+
+  &:hover,
+  &:focus {
+    color: $clr-accent;
+    background-color: $clr-white;
+  }
+
+  @include mq(tablet) {
+    animation-name: moveRightTablet;
+  }
+
+  @include mq(desktop) {
+    animation-name: moveRightDesktop;
+  }
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translate(-50px, -20px);
+  }
+  50% {
+    transform: translate(0, -20px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveDown {
+  0% {
+    transform: translate(50px, 20px);
+  }
+  50% {
+    transform: translate(0, 20px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveLeftTablet {
+  0% {
+    transform: translateX(50px);
+  }
+  50% {
+    transform: translateX(-100px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveLeftDesktop {
+  0% {
+    transform: translateX(120px);
+  }
+  50% {
+    transform: translateX(-100px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveRightTablet {
+  0% {
+    transform: translateX(-50px);
+  }
+  50% {
+    transform: translateX(100px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveRightDesktop {
+  0% {
+    transform: translateX(-120px);
+  }
+  50% {
+    transform: translateX(100px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

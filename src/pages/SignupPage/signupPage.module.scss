@@ -1,0 +1,21 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  padding: 60px 20px;
+  background-repeat: no-repeat;
+  background-image: $gradient, url("../../assets/images/mobile/bg-signup.jpg");
+}
+
+.lowerText {
+  margin-top: 20px;
+  @include font(13px, 16px);
+  text-align: center;
+  color: $clr-gray-support;
+}
+
+.link {
+  display: inline-block;
+  margin-left: 3px;
+  color: $clr-accent-form;
+}

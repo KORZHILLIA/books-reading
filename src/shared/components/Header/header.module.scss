@@ -1,0 +1,24 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.header {
+  width: 100%;
+  padding: 16px;
+  box-shadow: $header-shadow;
+
+  @include mq(tablet-only) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  @include mq(desktop) {
+    width: 1280px;
+    margin: 0 auto;
+  }
+}
+
+.headerLabel {
+  @include font(20px, 27px);
+  font-family: $font-brand;
+  text-align: center;
+}

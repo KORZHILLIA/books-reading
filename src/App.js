@@ -1,7 +1,13 @@
-import styles from "./app.module.scss";
+import GeneralRoutes from "./GeneralRoutes";
+import Header from "./shared/components/Header";
 
 function App() {
-  return <h1 className={styles.app}>Hello</h1>;
+  return (
+    <>
+      <Header />
+      <GeneralRoutes />
+    </>
+  );
 }
 
 export default App;

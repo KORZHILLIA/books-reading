@@ -4,6 +4,7 @@ body {
   color: $clr-font-main;
 }
 
+body,
 h1,
 h2,
 h3,
@@ -22,4 +23,25 @@ ul {
 
 button {
   cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  @include mq(mobile) {
+    width: 320px;
+  }
+  @include mq(tablet) {
+    width: 768px;
+    padding: 0 32px;
+  }
+  @include mq(desktop) {
+    width: 1280px;
+    padding: 0 16px;
+  }
 }

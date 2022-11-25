@@ -1,0 +1,44 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  @include font(14px, 21px);
+  color: $clr-white;
+}
+
+.star {
+  @include font(14px, 21px, 600);
+  color: $clr-accent-form;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px 8px;
+  outline: none;
+  border: none;
+  background-color: $clr-white;
+  @include font(14px, 17px);
+  color: $clr-accent;
+
+  &::placeholder {
+    color: $clr-gray;
+  }
+}
+
+.lastInput {
+  @extend .input;
+  margin-bottom: 0;
+}
+
+.btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 20px;
+  border: none;
+  @include font(16px, 20px);
+  color: $clr-white;
+  background-color: $clr-accent;
+}
