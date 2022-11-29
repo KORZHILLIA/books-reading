@@ -10,8 +10,9 @@
   font-style: $fs;
 }
 
-@mixin flex($jc: center, $ai: center) {
+@mixin flex($jc: center, $ai: center, $direction: row) {
   display: flex;
+  flex-direction: $direction;
   justify-content: $jc;
   align-items: $ai;
 }

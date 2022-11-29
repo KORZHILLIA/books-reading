@@ -1,6 +1,20 @@
 @import "../../styles/base/variables";
 @import "../../styles/utils/mixins";
 
+.general {
+  width: 100%;
+  padding: 32px 20px;
+  background-color: $clr-accent;
+  background-repeat: no-repeat;
+  background-image: $gradient, url("../../assets/images/mobile/bg-signup.jpg");
+  background-position: 50% 50%, 0 100%;
+  background-size: cover, cover;
+
+  @include mq(tablet) {
+    background-image: $gradient, url("../../assets/images/tablet/bg-signup.jpg");
+  }
+}
+
 .form {
   max-width: 400px;
   margin: 0 auto;
@@ -29,19 +43,10 @@
   }
 }
 
-.accept {
-  position: absolute;
-  bottom: 30px;
-  right: 16px;
-  padding: 4px;
-  @include flex();
-  fill: $clr-accent;
-  background-color: transparent;
-}
-
 .btn {
   width: 100%;
   margin-top: 10px;
+  margin-bottom: 16px;
   padding: 20px;
   border: none;
   @include font(16px, 20px);
@@ -56,36 +61,13 @@
   }
 }
 
-.warn {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  @include font(12px, 12px);
+.link {
+  display: block;
+  @include font(13px, 16px);
   color: $clr-accent-form;
-  transform: scale(1);
-  transition: transform $transition;
+  text-align: center;
 
   @include mq(tablet) {
-    @include font(14px);
+    @include font(16px, 18px);
   }
-}
-
-.warnHidden {
-  @extend .warn;
-  transform: scale(0);
-  transition: transform $transition;
-}
-
-.passwordWarn,
-.passwordWarnHidden {
-  max-width: 55%;
-  bottom: -30px;
-}
-
-.passwordWarn {
-  @extend .warn;
-}
-
-.passwordWarnHidden {
-  @extend .warnHidden;
 }

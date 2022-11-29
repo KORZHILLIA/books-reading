@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
 
 const FormInput = ({
+  children,
   label,
   type,
   name,
@@ -10,13 +11,14 @@ const FormInput = ({
   required,
   autocomplete,
   onChange,
+  onBlur,
   placeholder,
   labelStyle,
   inputStyle,
 }) => {
   const inputId = useMemo(() => nanoid(2), []);
   return (
-    <>
+    <div style={{ position: "relative" }}>
       {label ? (
         <label className={labelStyle} htmlFor={inputId}>
           {label}
@@ -31,9 +33,11 @@ const FormInput = ({
         required={required}
         autoComplete={autocomplete}
         onChange={onChange}
+        onBlur={onBlur}
         placeholder={placeholder}
       />
-    </>
+      {children}
+    </div>
   );
 };
 
@@ -43,6 +47,7 @@ FormInput.defaultProps = {
   required: true,
   autocomplete: "off",
   onChange: () => {},
+  onBlur: () => {},
   placeholder: "",
 };
 
@@ -54,6 +59,7 @@ FormInput.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
   placeholder: PropTypes.string,
   labelStyle: PropTypes.string,
   inputStyle: PropTypes.string,

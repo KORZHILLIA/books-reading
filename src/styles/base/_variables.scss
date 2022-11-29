@@ -6,8 +6,10 @@ $clr-white: #fff;
 $clr-overlay: #2b2b2b1a;
 $clr-accent: #4735af;
 $clr-gray: #b1b5c2;
+$clr-gray-dark: #242a3780;
 $clr-gray-support: #898f9f;
 $clr-accent-form: #f25137;
+$clr: #242a3780;
 
 $clr-font-main: #242a37;
 
@@ -19,6 +21,7 @@ $gradient: linear-gradient(
 );
 
 $transition: 300ms ease-in-out;
+$transition-slow: 1000ms linear;
 
 $font-main: "Rokkitt", serif;
 $font-brand: "Abril Fatface", cursive;

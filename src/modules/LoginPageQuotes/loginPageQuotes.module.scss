@@ -1,0 +1,62 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  padding: 32px;
+  @include flex(center, center, column);
+}
+
+.list {
+  @include flex(flex-start);
+  width: 230px;
+  overflow: hidden;
+
+  @include mq(tablet) {
+    width: 400px;
+  }
+}
+
+.item {
+  transition: transform $transition-slow;
+}
+
+.text {
+  position: relative;
+  width: 230px;
+  margin-top: 10px;
+  padding-bottom: 16px;
+  @include font(13px, 16px);
+  text-align: center;
+  transition: color $transition;
+
+  @include mq(tablet) {
+    width: 400px;
+    @include font(20px, 24px);
+  }
+
+  &::after {
+    position: absolute;
+    content: "";
+    width: 100px;
+    height: 1px;
+    bottom: 0;
+    left: calc((100% - 100px) / 2);
+    background-color: $clr-gray-dark;
+
+    @include mq(tablet) {
+      width: 150px;
+      left: calc((100% - 150px) / 2);
+    }
+  }
+}
+
+.author {
+  margin-top: 12px;
+  @include font(14px, 17px);
+  text-align: center;
+  color: $clr-gray-support;
+
+  @include mq(tablet) {
+    @include font(20px, 24px);
+  }
+}

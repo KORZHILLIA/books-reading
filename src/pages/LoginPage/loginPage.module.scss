@@ -1,0 +1,7 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  @include flex(flex-start, center, column);
+  //   padding-bottom: 60px;
+}

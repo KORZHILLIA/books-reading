@@ -3,8 +3,15 @@
 
 .general {
   padding: 60px 20px;
+  background-color: $clr-accent;
   background-repeat: no-repeat;
   background-image: $gradient, url("../../assets/images/mobile/bg-signup.jpg");
+  background-position: 50% 50%, 0 100%;
+  background-size: cover, cover;
+
+  @include mq(tablet) {
+    background-image: $gradient, url("../../assets/images/tablet/bg-signup.jpg");
+  }
 }
 
 .lowerText {
@@ -12,6 +19,10 @@
   @include font(13px, 16px);
   text-align: center;
   color: $clr-gray-support;
+
+  @include mq(tablet) {
+    @include font(16px, 18px);
+  }
 }
 
 .link {
