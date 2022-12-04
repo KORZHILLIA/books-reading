@@ -3,5 +3,16 @@
 
 .general {
   @include flex(flex-start, center, column);
-  //   padding-bottom: 60px;
+}
+
+.link {
+  display: block;
+  transform: translateY(-30px);
+  @include font(13px, 16px);
+  color: $clr-accent-form;
+  text-align: center;
+
+  @include mq(tablet) {
+    @include font(16px, 18px);
+  }
 }

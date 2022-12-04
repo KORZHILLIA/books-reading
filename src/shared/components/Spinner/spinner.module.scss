@@ -1,0 +1,35 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.spinner {
+  // position: fixed;
+  // top: calc(50vh - 16px);
+  // left: calc(50vw - 16px);
+  animation: rotation 3s linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  fill: $clr-accent;
+
+  // @include mq(tablet) {
+  //   top: calc(50vh - 26px);
+  //   left: calc(50vw - 26px);
+  // }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

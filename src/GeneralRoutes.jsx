@@ -9,6 +9,10 @@ const GeneralRoutes = () => {
       <Route path="/" element={<IntroPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/api/auth/verify/:verificationToken"
+        element={<LoginPage />}
+      />
     </Routes>
   );
 };

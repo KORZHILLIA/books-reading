@@ -60,14 +60,3 @@
     background-color: $clr-white;
   }
 }
-
-.link {
-  display: block;
-  @include font(13px, 16px);
-  color: $clr-accent-form;
-  text-align: center;
-
-  @include mq(tablet) {
-    @include font(16px, 18px);
-  }
-}

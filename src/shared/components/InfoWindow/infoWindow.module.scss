@@ -1,0 +1,32 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.general {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: $clr-body-bg;
+}
+
+.text {
+  @include font(24px, 36px);
+  color: $clr-accent;
+}
+
+.btn {
+  margin-top: 20px;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  @include font(18px);
+  color: $clr-white;
+  background-color: $clr-accent;
+  transition: color $transition, background-color $transition;
+
+  &:hover,
+  &:focus {
+    color: $clr-accent;
+    background-color: $clr-gray;
+    outline: none;
+  }
+}

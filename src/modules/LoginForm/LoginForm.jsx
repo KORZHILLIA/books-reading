@@ -1,5 +1,4 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import useForm from "../../shared/hooks/useForm";
 import FormInput from "../../shared/components/FormInput";
@@ -46,9 +45,6 @@ const LoginForm = ({ onSubmit }) => {
           inputStyle={styles.input}
         ></FormInput>
         <ButtonUniversal type="submit" text="Login" btnStyles={styles.btn} />
-        <Link className={styles.link} to="/signup">
-          Signup
-        </Link>
       </form>
     </div>
   );

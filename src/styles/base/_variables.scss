@@ -3,7 +3,6 @@
 
 $clr-body-bg: #f6f7fb;
 $clr-white: #fff;
-$clr-overlay: #2b2b2b1a;
 $clr-accent: #4735af;
 $clr-gray: #b1b5c2;
 $clr-gray-dark: #242a3780;
@@ -13,12 +12,11 @@ $clr: #242a3780;
 
 $clr-font-main: #242a37;
 
+$clr-backdrop: #143262cc;
+$clr-overlay: #2b2b2b1a;
+
 $header-shadow: 0px 2px 3px #091e3f1a;
-$gradient: linear-gradient(
-  to bottom,
-  rgba(9, 30, 63, 0.8),
-  rgba(9, 30, 63, 0.8)
-);
+$gradient: linear-gradient(to bottom, #091e3fcc, #091e3fcc);
 
 $transition: 300ms ease-in-out;
 $transition-slow: 1000ms linear;

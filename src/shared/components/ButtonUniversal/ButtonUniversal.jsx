@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { memo } from "react";
 import PropTypes from "prop-types";
 import SVGCreator from "../SVGCreator";
@@ -10,10 +11,19 @@ const ButtonUniversal = ({
   iconName,
   svgWidth,
   svgHeight,
+  isFocusNeeded,
   onClick,
 }) => {
+  const btn = useRef();
+
+  useEffect(() => {
+    if (isFocusNeeded) {
+      btn.current.focus();
+    }
+  }, [isFocusNeeded]);
+
   return (
-    <button className={btnStyles} type={type} onClick={onClick}>
+    <button ref={btn} className={btnStyles} type={type} onClick={onClick}>
       {text}
       {iconName && (
         <div className={svgStyles}>
@@ -32,6 +42,7 @@ ButtonUniversal.defaultProps = {
   iconName: "",
   svgWidth: 0,
   svgHeight: 0,
+  isFocusNeeded: false,
   onClick: () => {},
 };
 
@@ -43,6 +54,7 @@ ButtonUniversal.propTypes = {
   iconName: PropTypes.string,
   svgWidth: PropTypes.number,
   svgHeight: PropTypes.number,
+  isFocusNeeded: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
