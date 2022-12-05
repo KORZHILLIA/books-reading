@@ -1,0 +1,48 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  @include flex();
+}
+
+.nav {
+  @include flex();
+  column-gap: 4px;
+  padding-right: 8px;
+  border-right: 2px solid $clr-gray-header;
+}
+
+.link {
+  @include flex();
+  padding: 6px;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: background-color $transition;
+
+  &:hover,
+  &:focus {
+    background-color: $clr-gray-light;
+  }
+}
+
+.linkActive {
+  @extend .link;
+  background-color: $clr-gray-light;
+}
+
+.auth {
+  @include flex();
+  column-gap: 14px;
+  padding-left: 8px;
+  @include font(14px, 17px);
+}
+
+.logout {
+  font-weight: 300;
+  color: $clr-accent;
+  text-decoration: underline;
+
+  @include mq(tablet) {
+    @include font(18px, 24px);
+  }
+}

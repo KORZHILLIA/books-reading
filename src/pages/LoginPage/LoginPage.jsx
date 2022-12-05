@@ -43,6 +43,7 @@ const LoginPage = () => {
       return;
     }
     if (isLoggedIn) {
+      navigate("/home");
       return;
     }
     if (isVerified) {

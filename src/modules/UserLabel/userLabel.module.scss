@@ -1,0 +1,31 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  @include flex();
+  margin: 0 auto;
+  @include font(14px, 17px);
+  color: $clr-accent;
+
+  @include mq(tablet) {
+    @include font(18px, 24px);
+  }
+}
+
+.letter {
+  @include flex();
+  width: 34px;
+  height: 34px;
+  padding: 6px;
+  border-radius: 50%;
+  background-color: $clr-gray-light;
+  font-weight: 600;
+
+  @include mq(tablet) {
+    margin-right: 12px;
+  }
+}
+
+.name {
+  font-weight: 300;
+}

@@ -1,5 +1,11 @@
 import * as authActions from "./auth-actions";
-import { signup, verify, login } from "../../shared/api/auth";
+import {
+  signup,
+  verify,
+  login,
+  getCurrent,
+  logout,
+} from "../../shared/api/auth";
 
 export const signupNewUser = (userData) => {
   const func = async (dispatch) => {
@@ -38,6 +44,34 @@ export const loginUser = (userData) => {
     } catch (error) {
       const { message } = error.response.data;
       dispatch(authActions.loginError({ message }));
+    }
+  };
+  return func;
+};
+
+export const getCurrentUser = (token) => {
+  const func = async (dispatch) => {
+    dispatch(authActions.getCurrentRequest());
+    try {
+      const data = await getCurrent(token);
+      dispatch(authActions.getCurrentSuccess(data));
+    } catch (error) {
+      const { message } = error.response.data;
+      dispatch(authActions.getCurrentError(message));
+    }
+  };
+  return func;
+};
+
+export const logoutUser = () => {
+  const func = async (dispatch) => {
+    dispatch(authActions.logoutRequest());
+    try {
+      await logout();
+      dispatch(authActions.logoutSuccess());
+    } catch (error) {
+      const { message } = error.response.data;
+      dispatch(authActions.logoutError(message));
     }
   };
   return func;

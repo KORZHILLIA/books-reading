@@ -44,6 +44,11 @@ const userReducer = createReducer(initialState, (builder) =>
       ...store,
       isVerified: false,
     }))
+    .addCase(authActions.getCurrentSuccess, (store, { payload }) => {
+      const { name, email, token, isVerified } = payload;
+      return { ...store, name, email, token, isVerified, isLoggedIn: true };
+    })
+    .addCase(authActions.logoutSuccess, (store) => initialState)
 );
 
 const loadingReducer = createReducer(false, (builder) =>
@@ -57,6 +62,12 @@ const loadingReducer = createReducer(false, (builder) =>
     .addCase(authActions.loginRequest, () => true)
     .addCase(authActions.loginSuccess, () => false)
     .addCase(authActions.loginError, () => false)
+    .addCase(authActions.getCurrentRequest, () => true)
+    .addCase(authActions.getCurrentSuccess, () => false)
+    .addCase(authActions.getCurrentError, () => false)
+    .addCase(authActions.logoutRequest, () => true)
+    .addCase(authActions.logoutSuccess, () => false)
+    .addCase(authActions.logoutError, () => false)
 );
 
 const errorReducer = createReducer(null, (builder) =>
@@ -70,6 +81,12 @@ const errorReducer = createReducer(null, (builder) =>
     .addCase(authActions.loginError, (_, { payload }) => payload)
     .addCase(authActions.loginRequest, () => null)
     .addCase(authActions.loginSuccess, () => null)
+    .addCase(authActions.getCurrentError, (_, { payload }) => payload)
+    .addCase(authActions.getCurrentRequest, () => null)
+    .addCase(authActions.getCurrentSuccess, () => null)
+    .addCase(authActions.logoutError, (_, { payload }) => payload)
+    .addCase(authActions.logoutRequest, () => null)
+    .addCase(authActions.logoutSuccess, () => null)
     .addCase(authActions.clearAuthError, () => null)
 );
 const authReducer = combineReducers({
