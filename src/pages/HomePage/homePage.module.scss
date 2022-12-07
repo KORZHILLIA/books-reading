@@ -1,0 +1,24 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.home {
+  padding-top: 20px;
+  padding-bottom: calc(80vh - 20px);
+  background-color: $clr-body-bg;
+}
+
+.upperBtn {
+  margin: 0 auto 20px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  @include font(14px, 17px);
+  background-color: $clr-accent-form;
+  color: $clr-white;
+  box-shadow: $shadow-btn;
+}
+
+.formBtn {
+  @extend .upperBtn;
+  background-color: $clr-accent;
+}

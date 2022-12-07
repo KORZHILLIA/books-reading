@@ -1,0 +1,100 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.form {
+  position: relative;
+  padding: 20px 8px;
+  border: 1px solid $clr-gray;
+  border-radius: 8px;
+  box-shadow: $shadow-btn;
+
+  @include mq(tablet) {
+    @include flex(flex-start);
+    flex-wrap: wrap;
+    column-gap: 32px;
+  }
+
+  @include mq(desktop) {
+    align-items: flex-end;
+    flex-wrap: nowrap;
+  }
+}
+
+.general {
+  margin-bottom: 20px;
+
+  @include mq(desktop) {
+    margin: 0;
+  }
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  @include font(14px, 17px);
+  color: $clr-gray-support;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid $clr-field-border;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+    background-color: $clr-white;
+    box-shadow: $shadow-field;
+  }
+}
+
+.title {
+  @include mq(tablet) {
+    width: 100%;
+  }
+  @include mq(desktop) {
+    width: unset;
+    flex-grow: 2;
+  }
+}
+
+.author {
+  @include mq(tablet) {
+    flex-grow: 1;
+  }
+}
+
+.btn {
+  margin: 20px auto 0;
+  padding: 12px 70px;
+  border: 1px solid $clr-font-main;
+  @include font(14px, 17px);
+  background-color: transparent;
+
+  @include mq(tablet) {
+    @include font(18px, 21px);
+  }
+
+  @include mq(desktop) {
+    margin: 0;
+    padding: 8px 70px;
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  @include flex();
+  border: 2px solid $clr-gray-support;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.close {
+  @include flex();
+  fill: $clr-field-border;
+}

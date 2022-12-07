@@ -1,4 +1,6 @@
 import { createReducer, combineReducers } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import * as authActions from "./auth-actions";
 
 const initialState = {
@@ -89,8 +91,17 @@ const errorReducer = createReducer(null, (builder) =>
     .addCase(authActions.logoutSuccess, () => null)
     .addCase(authActions.clearAuthError, () => null)
 );
+
+const userPersistConfig = {
+  key: "user",
+  storage,
+  whitelist: ["token"],
+};
+
+const userPersistReducer = persistReducer(userPersistConfig, userReducer);
+
 const authReducer = combineReducers({
-  user: userReducer,
+  user: userPersistReducer,
   loading: loadingReducer,
   error: errorReducer,
 });

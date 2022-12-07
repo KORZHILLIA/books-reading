@@ -22,12 +22,14 @@ ul {
 }
 
 button {
+  display: block;
   cursor: pointer;
 }
 
 a {
   text-decoration: none;
 }
+
 .container {
   width: 100%;
   margin: 0 auto;

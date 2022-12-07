@@ -13,12 +13,13 @@ const FormInput = ({
   onChange,
   onBlur,
   placeholder,
+  generalStyle,
   labelStyle,
   inputStyle,
 }) => {
   const inputId = useMemo(() => nanoid(2), []);
   return (
-    <div style={{ position: "relative" }}>
+    <div className={generalStyle} style={{ position: "relative" }}>
       {label ? (
         <label className={labelStyle} htmlFor={inputId}>
           {label}
@@ -52,7 +53,7 @@ FormInput.defaultProps = {
 };
 
 FormInput.propTypes = {
-  label: PropTypes.element,
+  label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   type: PropTypes.string,
   required: PropTypes.bool,
   autocomplete: PropTypes.oneOf(["on", "off"]),
@@ -61,6 +62,7 @@ FormInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   placeholder: PropTypes.string,
+  generalStyle: PropTypes.string,
   labelStyle: PropTypes.string,
   inputStyle: PropTypes.string,
 };

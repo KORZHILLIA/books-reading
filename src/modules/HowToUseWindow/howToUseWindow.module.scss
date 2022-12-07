@@ -1,0 +1,74 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  min-width: 250px;
+  padding: 40px 20px;
+  background-color: $clr-white;
+}
+
+.list {
+  margin-bottom: 40px;
+}
+
+.item {
+  @include flex(flex-start, flex-start, column);
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.header {
+  margin-bottom: 8px;
+  @include font(18px, 22px, 600);
+
+  @include mq(tablet) {
+    @include font(24px, 30px, 600);
+  }
+}
+
+.subheader {
+  @include flex(flex-start);
+  column-gap: 12px;
+  margin-bottom: 8px;
+  @include font(20px, 16px, 600);
+
+  @include mq(tablet) {
+    @include font(24px, 20px, 600);
+  }
+}
+
+.text {
+  @include flex(flex-end, flex-start);
+  align-self: flex-end;
+  column-gap: 8px;
+  max-width: 200px;
+  @include font(14px, 17px, 400);
+  color: $clr-gray-support;
+
+  @include mq(tablet) {
+    max-width: 260px;
+    @include font(18px, 21px);
+  }
+}
+
+.btn {
+  margin: 0 auto;
+  padding: 12px 40px;
+  border: none;
+  background-color: $clr-accent;
+  @include font(14px, 17px);
+  color: $clr-white;
+  transition: color $transition, background-color $transition;
+  box-shadow: $shadow-btn;
+  @include mq(tablet) {
+    @include font(18px, 21px);
+  }
+
+  &:hover,
+  &:focus {
+    color: $clr-accent;
+    background-color: $clr-gray-support;
+  }
+}

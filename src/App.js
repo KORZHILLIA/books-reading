@@ -11,6 +11,9 @@ function App() {
   const { token } = auth.user;
 
   useEffect(() => {
+    if (!token) {
+      return;
+    }
     dispatch(getCurrentUser(token));
   }, []);
 

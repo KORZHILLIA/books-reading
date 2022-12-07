@@ -41,6 +41,7 @@
   font-weight: 300;
   color: $clr-accent;
   text-decoration: underline;
+  cursor: pointer;
 
   @include mq(tablet) {
     @include font(18px, 24px);
