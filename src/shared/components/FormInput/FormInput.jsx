@@ -10,6 +10,9 @@ const FormInput = ({
   value,
   required,
   autocomplete,
+  min,
+  max,
+  step,
   onChange,
   onBlur,
   placeholder,
@@ -33,6 +36,9 @@ const FormInput = ({
         value={value}
         required={required}
         autoComplete={autocomplete}
+        min={min}
+        max={max}
+        step={step}
         onChange={onChange}
         onBlur={onBlur}
         placeholder={placeholder}
@@ -47,6 +53,7 @@ FormInput.defaultProps = {
   type: "text",
   required: true,
   autocomplete: "off",
+  step: 1,
   onChange: () => {},
   onBlur: () => {},
   placeholder: "",
@@ -57,6 +64,9 @@ FormInput.propTypes = {
   type: PropTypes.string,
   required: PropTypes.bool,
   autocomplete: PropTypes.oneOf(["on", "off"]),
+  min: PropTypes.number,
+  max: PropTypes.number,
+  step: PropTypes.number,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

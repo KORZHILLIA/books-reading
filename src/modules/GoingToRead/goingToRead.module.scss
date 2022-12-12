@@ -1,0 +1,96 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  margin: 20px 0;
+}
+
+.header {
+  margin-bottom: 20px;
+  @include font(19px, 23px, 600);
+
+  @include mq(tablet) {
+    margin-bottom: 24px;
+  }
+}
+
+.item {
+  position: relative;
+  @include flex(flex-start, flex-start);
+  padding: 20px;
+  background-color: $clr-white;
+  box-shadow: $shadow-header;
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.table {
+  margin-left: 12px;
+  @include font();
+}
+
+.title {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.head {
+  width: 80px;
+  padding: 10px 0;
+  color: $clr-gray-support;
+  font-weight: 500;
+}
+
+.provision {
+  padding: 10px 0;
+}
+
+.largerTable {
+  width: 95%;
+  @include font(14px, 17px);
+  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.largerHead {
+  color: $clr-gray-support;
+  font-weight: 500;
+  text-align: left;
+}
+
+.tableBody {
+  border-collapse: separate;
+  border-spacing: 8px;
+}
+
+.row {
+  position: relative;
+  background-color: $clr-white;
+  box-shadow: $shadow-header;
+}
+
+.svgCell {
+  width: 22px;
+  padding: 14px;
+  padding-left: 20px;
+  padding-right: 18px;
+}
+
+.titleCell {
+  padding-right: 80px;
+}
+
+.authorCell {
+  padding-right: 96px;
+}
+
+.yearCell {
+  padding-right: 62px;
+}
+
+.pagesCell {
+  padding-right: 20px;
+}

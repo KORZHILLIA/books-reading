@@ -1,0 +1,20 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.general {
+  position: absolute;
+}
+
+.closeBtn {
+  width: 30px;
+  height: 30px;
+  @include flex();
+  border: 2px solid $clr-gray-support;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.close {
+  @include flex();
+  fill: $clr-field-border;
+}

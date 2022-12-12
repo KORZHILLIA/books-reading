@@ -4,7 +4,15 @@ import sprite from "../../../assets/svg/sprite.svg";
 
 const SVGCreator = ({ iconName, width, height }) => {
   return (
-    <svg width={width} height={height}>
+    <svg
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      width={width}
+      height={height}
+    >
       <use href={`${sprite}#icon-${iconName}`}></use>
     </svg>
   );

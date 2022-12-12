@@ -81,20 +81,3 @@
     padding: 8px 70px;
   }
 }
-
-.closeBtn {
-  position: absolute;
-  top: 5px;
-  right: 8px;
-  width: 30px;
-  height: 30px;
-  @include flex();
-  border: 2px solid $clr-gray-support;
-  border-radius: 50%;
-  background-color: transparent;
-}
-
-.close {
-  @include flex();
-  fill: $clr-field-border;
-}

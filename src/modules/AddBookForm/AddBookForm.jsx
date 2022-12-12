@@ -1,7 +1,9 @@
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import useForm from "../../shared/hooks/useForm";
 import FormInput from "../../shared/components/FormInput";
 import ButtonUniversal from "../../shared/components/ButtonUniversal";
+import CloseBtn from "../../shared/components/CloseBtn";
 import styles from "./addBookForm.module.scss";
 
 const initialState = {
@@ -18,6 +20,9 @@ const AddBookForm = ({ onClose, onSubmit }) => {
     reset: true,
   });
   const { title, author, year, pages } = formState;
+
+  const currentYear = useMemo(() => new Date().getFullYear());
+
   return (
     <form className={styles.form} onSubmit={onFormSubmit}>
       <FormInput
@@ -48,9 +53,12 @@ const AddBookForm = ({ onClose, onSubmit }) => {
       />
       <FormInput
         label="Publication year"
-        type="text"
+        type="number"
         name="year"
         value={year}
+        min={1457}
+        max={currentYear}
+        step={1}
         required={true}
         autocomplete="off"
         placeholder="2004"
@@ -64,6 +72,8 @@ const AddBookForm = ({ onClose, onSubmit }) => {
         type="number"
         name="pages"
         value={pages}
+        min={5}
+        step={1}
         required={true}
         autocomplete="off"
         placeholder="..."
@@ -73,15 +83,7 @@ const AddBookForm = ({ onClose, onSubmit }) => {
         inputStyle={styles.input}
       />
       <ButtonUniversal type="submit" text="Add" btnStyles={styles.btn} />
-      <ButtonUniversal
-        type="button"
-        iconName="cross"
-        svgWidth={10}
-        svgHeight={10}
-        onClick={onClose}
-        btnStyles={styles.closeBtn}
-        svgStyles={styles.close}
-      />
+      <CloseBtn onClick={onClose} position={{ top: 5, right: 8 }} />
     </form>
   );
 };
