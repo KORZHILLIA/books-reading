@@ -1,0 +1,8 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.main {
+  min-height: calc(100vh - 66px);
+  padding: 20px 0;
+  background-color: $clr-body-bg;
+}

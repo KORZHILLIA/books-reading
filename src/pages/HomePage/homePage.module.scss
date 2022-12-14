@@ -1,10 +1,11 @@
 @import "../../styles/base/variables";
 @import "../../styles/utils/mixins";
 
-.home {
-  padding-top: 20px;
-  padding-bottom: calc(80vh - 20px);
+.main {
+  min-height: calc(100vh - 66px);
+  padding: 20px 0;
   background-color: $clr-body-bg;
+  // overflow: scroll;
 }
 
 .upperBtn {
@@ -21,4 +22,19 @@
 .formBtn {
   @extend .upperBtn;
   background-color: $clr-accent;
+}
+
+.trainingBtn {
+  margin: 0 auto;
+  padding: 11px 38px;
+  @include font(16px, 20px);
+  color: $clr-white;
+  background-color: $clr-accent;
+  transition: color $transition, background-color $transition;
+
+  &:hover,
+  &:focus {
+    color: $clr-accent;
+    background-color: $clr-gray-support;
+  }
 }

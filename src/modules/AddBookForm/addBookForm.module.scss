@@ -61,7 +61,11 @@
 
 .author {
   @include mq(tablet) {
-    flex-grow: 1;
+    width: 336px;
+  }
+
+  @include mq(desktop) {
+    width: 250px;
   }
 }
 

@@ -1,0 +1,45 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.form {
+  position: relative;
+}
+
+.select {
+  width: 100%;
+  height: 41px;
+  padding-left: 12px;
+  @include font(14px, 21px);
+  color: $clr-font-main;
+  background-color: $clr-white;
+  box-shadow: $shadow-field;
+  outline: none;
+  appearance: none;
+}
+
+.arrow {
+  position: absolute;
+  top: 18px;
+  right: 14px;
+  pointer-events: none;
+}
+
+.label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  @include font(14px, 21px);
+  color: $clr-field-border;
+  background-color: $clr-white;
+  pointer-events: none;
+}
+
+.btn {
+  width: 170px;
+  @include flex();
+  margin: 32px auto 0;
+  padding: 10px 0;
+  border: 1px solid $clr-font-main;
+  @include font(14px, 21px);
+  background-color: transparent;
+}

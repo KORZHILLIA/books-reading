@@ -1,0 +1,18 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.general {
+  position: absolute;
+  @include flex(flex-start);
+  top: 12px;
+  left: 12px;
+  width: 50%;
+  height: auto;
+  @include font(14px, 17px);
+  color: $clr-field-border;
+  background-color: $clr-body-bg;
+}
+
+.text {
+  margin-left: 12px;
+}

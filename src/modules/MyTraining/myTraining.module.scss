@@ -1,0 +1,63 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.header {
+  width: 100%;
+  @include flex();
+  margin-bottom: 20px;
+  padding: 18px 0;
+  @include font(20px, 24px);
+  color: $clr-white;
+  background-color: $clr-field-border;
+}
+
+.form {
+  @include mq(tablet) {
+    @include flex();
+    column-gap: 40px;
+  }
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  color: $clr-body-bg;
+  background-color: transparent;
+  border: 1px solid $clr-field-border;
+  outline: none;
+
+  &::-webkit-datetime-edit-text,
+  &::-webkit-datetime-edit-day-field,
+  &::-webkit-datetime-edit-month-field,
+  &::-webkit-datetime-edit-year-field {
+    color: $clr-body-bg;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 12px 12px 18px calc(100% - 22px);
+    opacity: 0;
+    z-index: 2;
+  }
+
+  @include mq(tablet) {
+    width: 250px;
+  }
+}
+
+.arrow {
+  position: absolute;
+  top: 18px;
+  right: 14px;
+}
+
+.choice {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  @include font(16px, 21px);
+  background-color: $clr-body-bg;
+}

@@ -1,0 +1,17 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  min-width: 300px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: $clr-body-bg;
+
+  @include mq(tablet) {
+    min-width: 724px;
+  }
+
+  @include mq(desktop) {
+    min-width: 1268px;
+  }
+}

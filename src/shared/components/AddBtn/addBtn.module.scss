@@ -1,0 +1,21 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.invisible {
+  position: fixed;
+  bottom: 40px;
+  left: calc(50% - 26px);
+  width: 52px;
+  height: 52px;
+  @include flex();
+  border-radius: 50%;
+  background-color: $clr-accent;
+  transform: scale(0);
+  transition: transform $transition;
+}
+
+.visible {
+  @extend .invisible;
+  transform: scale(1);
+  transition: transform $transition;
+}
