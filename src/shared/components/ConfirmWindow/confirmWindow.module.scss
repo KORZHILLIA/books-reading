@@ -1,0 +1,44 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.general {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: $clr-body-bg;
+}
+
+.text {
+  @include font(24px, 36px);
+  color: $clr-accent;
+}
+
+.btnsContainer {
+  @include flex();
+  column-gap: 40px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.yesBtn {
+  min-width: 75px;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  @include font(18px);
+  color: $clr-white;
+  background-color: $clr-accent-form;
+  transition: color $transition, background-color $transition;
+
+  &:hover,
+  &:focus {
+    color: $clr-accent;
+    background-color: $clr-gray;
+    outline: none;
+  }
+}
+
+.cancelBtn {
+  @extend .yesBtn;
+  background-color: $clr-accent;
+}

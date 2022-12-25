@@ -5,15 +5,6 @@
   margin: 20px 0;
 }
 
-.header {
-  margin-bottom: 20px;
-  @include font(19px, 23px, 600);
-
-  @include mq(tablet) {
-    margin-bottom: 24px;
-  }
-}
-
 .item {
   position: relative;
   @include flex(flex-start, flex-start);
@@ -26,25 +17,13 @@
   }
 }
 
-.table {
-  margin-left: 12px;
-  @include font();
-}
+.header {
+  margin-bottom: 20px;
+  @include font(19px, 23px, 600);
 
-.title {
-  margin-bottom: 12px;
-  text-align: left;
-}
-
-.head {
-  width: 80px;
-  padding: 10px 0;
-  color: $clr-gray-support;
-  font-weight: 500;
-}
-
-.provision {
-  padding: 10px 0;
+  @include mq(tablet) {
+    margin-bottom: 24px;
+  }
 }
 
 .largerTable {

@@ -1,28 +1,38 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, memo } from "react";
+import PropTypes from "prop-types";
 import useForm from "../../shared/hooks/useForm";
 import FormInput from "../../shared/components/FormInput";
 import DateInputDecorator from "../../shared/components/DateInputDecorator";
 import SVGCreator from "../../shared/components/SVGCreator";
-import styles from "./myTraining.module.scss";
+import styles from "./trainingInterval.module.scss";
 
 const initialState = {
   start: "",
   finish: "",
 };
 
-const MyTraining = ({ onSubmit }) => {
-  const date = new Date();
+const TrainingInterval = ({ setBtn, setTimes }) => {
+  const date = useMemo(() => new Date(), []);
   const minDate = useMemo(() => date.toISOString().slice(0, 10), [date]);
 
-  const { formState, onInputChange, onFormSubmit } = useForm({
+  const { formState, onInputChange } = useForm({
     initialState,
-    onSubmit,
   });
   const { start, finish } = formState;
+
+  useEffect(() => {
+    setTimes(formState);
+    if (start && finish) {
+      setBtn(true);
+    } else {
+      setBtn(false);
+    }
+  }, [start, finish]);
+
   return (
     <div className={styles.general}>
       <h2 className={styles.header}>My training</h2>
-      <form className={styles.form} onSubmit={onFormSubmit}>
+      <form className={styles.form}>
         <FormInput
           label={!start ? <DateInputDecorator text="Start" /> : null}
           type="date"
@@ -58,4 +68,12 @@ const MyTraining = ({ onSubmit }) => {
   );
 };
 
-export default MyTraining;
+TrainingInterval.defaultProps = {
+  onSubmit: () => {},
+};
+
+TrainingInterval.propTypes = {
+  onSubmit: PropTypes.func,
+};
+
+export default memo(TrainingInterval);

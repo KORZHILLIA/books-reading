@@ -13,6 +13,7 @@ const ButtonUniversal = ({
   svgHeight,
   isFocusNeeded,
   onClick,
+  disabled,
 }) => {
   const btn = useRef();
 
@@ -23,7 +24,13 @@ const ButtonUniversal = ({
   }, [isFocusNeeded]);
 
   return (
-    <button ref={btn} className={btnStyles} type={type} onClick={onClick}>
+    <button
+      ref={btn}
+      className={btnStyles}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {text}
       {iconName && (
         <div className={svgStyles}>
@@ -44,6 +51,7 @@ ButtonUniversal.defaultProps = {
   svgHeight: 0,
   isFocusNeeded: false,
   onClick: () => {},
+  disabled: false,
 };
 
 ButtonUniversal.propTypes = {
@@ -56,6 +64,7 @@ ButtonUniversal.propTypes = {
   svgHeight: PropTypes.number,
   isFocusNeeded: PropTypes.bool,
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default memo(ButtonUniversal);

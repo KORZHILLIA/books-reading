@@ -1,0 +1,136 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  width: 100%;
+  margin-bottom: 20px;
+
+  @include mq(tablet-only) {
+    @include flex(center, flex-start);
+    column-gap: 20px;
+    padding: 20px 42px;
+    background-color: $clr-white;
+    box-shadow: $shadow-header;
+  }
+
+  @include mq(desktop) {
+    max-width: 288px;
+  }
+}
+
+.header {
+  width: 100%;
+  padding: 18px 0;
+  @include font(20px, 24px, 600);
+  color: $clr-white;
+  text-align: center;
+  background-color: $clr-gray;
+
+  @include mq(tablet-only) {
+    width: 275px;
+  }
+}
+
+.list {
+  @include flex();
+  padding: 44px 30px;
+  gap: 20px;
+  background-color: $clr-white;
+  box-shadow: $shadow-header;
+
+  @include mq(tablet) {
+    align-items: flex-start;
+  }
+
+  @include mq(tablet-only) {
+    padding: 0;
+    gap: 12px;
+    background-color: transparent;
+    box-shadow: unset;
+  }
+}
+
+.item {
+  width: 100px;
+}
+
+.smallItem {
+  width: 63px;
+
+  @include mq(tablet) {
+    width: 100px;
+  }
+
+  @include mq(desktop) {
+    width: 66px;
+  }
+}
+
+.digit {
+  width: 100px;
+  height: 100px;
+  @include flex();
+  margin-bottom: 14px;
+  @include font(45px, 36px, 700);
+  color: $clr-accent;
+  background-color: $clr-gray-light;
+  box-shadow: $shadow-goals;
+
+  @include mq(tablet) {
+    height: 60px;
+  }
+
+  @include mq(tablet-only) {
+    margin-bottom: 4px;
+  }
+
+  @include mq(desktop) {
+    width: 66px;
+    height: 100px;
+  }
+}
+
+.smallDigit {
+  @extend .digit;
+  width: 63px;
+  height: 63px;
+
+  @include mq(tablet) {
+    width: 100px;
+    height: 60px;
+  }
+
+  @include mq(desktop) {
+    width: 66px;
+    height: 66px;
+  }
+}
+
+.text {
+  max-width: 60px;
+  margin: 0 auto;
+  @include font(14px, 17px);
+  color: $clr-gray-support;
+  text-align: center;
+
+  @include mq(tablet) {
+    max-width: 100%;
+    @include font(11px, 13px);
+    margin: 0;
+  }
+
+  @include mq(desktop) {
+    max-width: 57px;
+    margin: 0 auto;
+    @include font(12px, 15px);
+  }
+}
+
+.smallText {
+  @extend .text;
+  max-width: 50px;
+
+  @include mq(tablet-only) {
+    max-width: 100%;
+  }
+}

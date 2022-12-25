@@ -2,36 +2,23 @@ import PropTypes from "prop-types";
 import useBreakpoints from "../../shared/hooks/useBreakpoints";
 import SVGCreator from "../../shared/components/SVGCreator";
 import CloseBtn from "../../shared/components/CloseBtn";
+import MobileBookItem from "../../shared/components/MobileBookItem";
 import styles from "./goingToRead.module.scss";
 
 const GoingToRead = ({ books, onCloseBtnClick }) => {
   const { less768px } = useBreakpoints();
 
   const mobileElements = books.map(({ _id, title, author, year, pages }) => (
-    <li key={_id} className={styles.item}>
-      <SVGCreator iconName="library" width={22} height={22} />
-      <table className={styles.table}>
-        <caption className={styles.title}>{title}</caption>
-        <tbody>
-          <tr>
-            <th className={styles.head}>Author:</th>
-            <td className={styles.provision}>{author}</td>
-          </tr>
-          <tr>
-            <th className={styles.head}>Year:</th>
-            <td className={styles.provision}>{year}</td>
-          </tr>
-          <tr>
-            <th className={styles.head}>Pages:</th>
-            <td className={styles.provision}>{pages}</td>
-          </tr>
-        </tbody>
-      </table>
-      <CloseBtn
-        onClick={() => onCloseBtnClick(_id)}
-        position={{ top: 10, right: 12 }}
-      />
-    </li>
+    <MobileBookItem
+      key={_id}
+      id={_id}
+      title={title}
+      author={author}
+      year={year}
+      pages={pages}
+      itemStyles={styles.item}
+      onCloseBtnClick={onCloseBtnClick}
+    />
   ));
 
   const largerElements = books.map(({ _id, title, author, year, pages }) => (

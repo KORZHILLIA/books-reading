@@ -1,0 +1,33 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.table {
+  width: 100%;
+  margin: 40px 0;
+  border-top: 2px solid $clr-gray-header;
+  border-bottom: 2px solid $clr-gray-header;
+  background-color: transparent;
+
+  & > thead th {
+    border-bottom: 1px solid $clr-gray-header;
+  }
+
+  & > tbody td {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  & tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.headCell {
+  padding: 12px 0;
+  @include font(14px, 21px);
+  color: $clr-gray-support;
+  text-align: left;
+}
+
+.closeCell {
+  width: 40px;
+}

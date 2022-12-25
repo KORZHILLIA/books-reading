@@ -1,0 +1,23 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.table {
+  margin-left: 12px;
+  @include font();
+}
+
+.title {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.head {
+  width: 80px;
+  padding: 10px 0;
+  color: $clr-gray-support;
+  font-weight: 500;
+}
+
+.provision {
+  padding: 10px 0;
+}

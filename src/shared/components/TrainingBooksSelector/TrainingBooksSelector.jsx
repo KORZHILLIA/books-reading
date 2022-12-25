@@ -7,7 +7,7 @@ import librarySelectors from "../../../redux/library/library-selectors";
 import styles from "./trainingBooksSelector.module.scss";
 
 const initialState = {
-  book: "",
+  id: "",
 };
 
 const TrainingBooksSelector = ({ onSubmit }) => {
@@ -18,7 +18,7 @@ const TrainingBooksSelector = ({ onSubmit }) => {
     onSubmit,
     reset: true,
   });
-  const { book } = formState;
+  const { id } = formState;
 
   const elements = books.map(({ _id, title }) => (
     <option key={_id} className={styles.option} value={_id}>
@@ -29,20 +29,26 @@ const TrainingBooksSelector = ({ onSubmit }) => {
   return (
     <form onSubmit={onFormSubmit} className={styles.form}>
       <select
-        style={{ backgroundColor: `${!book ? "white" : "transparent"}` }}
-        name="book"
+        style={{ backgroundColor: `${!id ? "white" : "transparent"}` }}
+        name="id"
         className={styles.select}
         onChange={onInputChange}
       >
+        <option key="ownId" value=""></option>
         {elements}
       </select>
-      {!book ? (
+      {!id ? (
         <p className={styles.label}>Choose book from the library</p>
       ) : null}
       <div className={styles.arrow}>
         <SVGCreator iconName="triangle" width={13} height={7} />
       </div>
-      <ButtonUniversal type="submit" text="Add" btnStyles={styles.btn} />
+      <ButtonUniversal
+        type="submit"
+        text="Add"
+        btnStyles={styles.btn}
+        disabled={!Boolean(id)}
+      />
     </form>
   );
 };

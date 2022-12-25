@@ -2,7 +2,26 @@
 @import "../../styles/utils/mixins";
 
 .main {
+  position: relative;
   min-height: calc(100vh - 66px);
   padding: 20px 0;
   background-color: $clr-body-bg;
+}
+
+.btn {
+  position: absolute;
+  bottom: 20px;
+  left: calc(50% - 85px);
+  width: 170px;
+  padding: 12px 10px;
+  @include flex();
+  @include font(14px, 21px);
+  color: $clr-white;
+  background-color: $clr-accent-form;
+}
+
+.btnDisabled {
+  @extend .btn;
+  color: $clr-gray;
+  background-color: #f25037d1;
 }

@@ -2,6 +2,7 @@ import { createReducer, combineReducers } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import * as libraryActions from "./library-actions";
+import distributeBooks from "../../helpers/distributeBooks";
 
 const initialState = {
   future: [],
@@ -11,18 +12,24 @@ const initialState = {
 
 const booksReducer = createReducer(initialState, (builder) =>
   builder
-    .addCase(libraryActions.addNewSuccess, (store, { payload }) => {
-      const futureBooks = payload.filter((book) => book.status === "future");
+    .addCase(libraryActions.getAll, (store, { payload }) => {
       return {
         ...store,
-        future: futureBooks,
+        future: distributeBooks(payload, "future"),
+        present: distributeBooks(payload, "present"),
+        past: distributeBooks(payload, "past"),
+      };
+    })
+    .addCase(libraryActions.addNewSuccess, (store, { payload }) => {
+      return {
+        ...store,
+        future: distributeBooks(payload, "future"),
       };
     })
     .addCase(libraryActions.removeNewSuccess, (store, { payload }) => {
-      const futureBooks = payload.filter((book) => book.status === "future");
       return {
         ...store,
-        future: futureBooks,
+        future: distributeBooks(payload, "future"),
       };
     })
 );
@@ -35,6 +42,12 @@ const loadingReducer = createReducer(false, (builder) =>
     .addCase(libraryActions.removeNewRequest, () => true)
     .addCase(libraryActions.removeNewSuccess, () => false)
     .addCase(libraryActions.removeNewError, () => false)
+    .addCase(libraryActions.relocateBookFromFutureToPresentRequest, () => true)
+    .addCase(libraryActions.relocateBookFromFutureToPresentSuccess, () => false)
+    .addCase(libraryActions.relocateBookFromFutureToPresentError, () => false)
+    .addCase(libraryActions.relocateBookFromPresentToFutureRequest, () => true)
+    .addCase(libraryActions.relocateBookFromPresentToFutureSuccess, () => false)
+    .addCase(libraryActions.relocateBookFromPresentToFutureError, () => false)
 );
 
 const errorReducer = createReducer(null, (builder) =>
@@ -45,17 +58,30 @@ const errorReducer = createReducer(null, (builder) =>
     .addCase(libraryActions.removeNewRequest, () => null)
     .addCase(libraryActions.removeNewSuccess, () => null)
     .addCase(libraryActions.removeNewError, (_, { payload }) => payload)
+    .addCase(libraryActions.relocateBookFromFutureToPresentRequest, () => null)
+    .addCase(libraryActions.relocateBookFromFutureToPresentSuccess, () => null)
+    .addCase(
+      libraryActions.relocateBookFromFutureToPresentError,
+      (_, { payload }) => payload
+    )
+    .addCase(libraryActions.relocateBookFromPresentToFutureRequest, () => null)
+    .addCase(libraryActions.relocateBookFromPresentToFutureSuccess, () => null)
+    .addCase(
+      libraryActions.relocateBookFromPresentToFutureError,
+      (_, { payload }) => payload
+    )
 );
 
-const booksPersistConfig = {
-  key: "library",
-  storage,
-};
+// const booksPersistConfig = {
+//   key: "library",
+//   storage,
+// };
 
-const booksPersistReducer = persistReducer(booksPersistConfig, booksReducer);
+// const booksPersistReducer = persistReducer(booksPersistConfig, booksReducer);
 
 const libraryReducer = combineReducers({
-  books: booksPersistReducer,
+  // books: booksPersistReducer,
+  books: booksReducer,
   loading: loadingReducer,
   error: errorReducer,
 });

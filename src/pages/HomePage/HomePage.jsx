@@ -9,6 +9,8 @@ import Spinner from "../../shared/components/Spinner";
 import InfoWindow from "../../shared/components/InfoWindow";
 import AddBtn from "../../shared/components/AddBtn";
 import AddBookFormWindow from "../../modules/AddBookFormWindow";
+import { getAll } from "../../shared/api/library";
+import * as libraryActions from "../../redux/library/library-actions";
 import {
   addNewBook,
   removeNewBook,
@@ -16,7 +18,14 @@ import {
 import librarySelectors from "../../redux/library/library-selectors";
 import styles from "./homePage.module.scss";
 
+const initialState = {
+  initialBooks: [],
+  initialLoading: false,
+  initialError: null,
+};
+
 const HomePage = () => {
+  const [state, setState] = useState(initialState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isAddBtnVisible, setIsAddBtnVisible] = useState(false);
@@ -25,9 +34,10 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading } = useSelector(librarySelectors.library);
+  const { initialLoading, initialError } = state;
+  const { loading, error } = useSelector(librarySelectors.library);
   const books = useSelector(librarySelectors.libraryFuture);
-  const error = useSelector(librarySelectors.defineLibraryError);
+  // const error = useSelector(librarySelectors.defineLibraryError);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -35,6 +45,34 @@ const HomePage = () => {
   const closeForm = () => setIsFormOpen(false);
   const openFormWindow = () => setIsFormWindowVisible(true);
   const closeFormWindow = () => setIsFormWindowVisible(false);
+
+  useEffect(() => {
+    const getAllBooks = async () => {
+      setState((prevState) => ({
+        ...prevState,
+        initialLoading: true,
+        initialError: null,
+      }));
+      try {
+        const initialBooks = await getAll();
+        setState((prevState) => ({
+          ...prevState,
+          initialBooks,
+          initialLoading: false,
+          initialError: null,
+        }));
+        dispatch(libraryActions.getAll(initialBooks));
+      } catch (error) {
+        setState((prevState) => ({
+          ...prevState,
+          initialLoading: false,
+          initialError: error.message,
+        }));
+        setIsModalOpen(true);
+      }
+    };
+    getAllBooks();
+  }, []);
 
   const addBook = (book) => dispatch(addNewBook(book));
   const addBookFromWindow = (book) => {
@@ -44,7 +82,6 @@ const HomePage = () => {
   const deleteBook = (bookId) => dispatch(removeNewBook(bookId));
 
   const scrollHandler = ({ target }) => {
-    console.log(target);
     if (target.scrollTop >= 106 && !isFormOpen) {
       setIsAddBtnVisible(true);
     } else {
@@ -70,7 +107,9 @@ const HomePage = () => {
         {isFormOpen ? (
           <AddBookForm onClose={closeForm} onSubmit={addBook} />
         ) : null}
-        {isModalOpen ? <HowToUseWindow onClick={closeModal} /> : null}
+        {!initialError && !error && isModalOpen ? (
+          <HowToUseWindow onClick={closeModal} />
+        ) : null}
         {books.length ? (
           <GoingToRead books={books} onCloseBtnClick={deleteBook} />
         ) : null}
@@ -91,8 +130,10 @@ const HomePage = () => {
           onSubmit={addBookFromWindow}
         />
       ) : null}
-      {loading ? <Spinner /> : null}
-      {error ? <InfoWindow text={error} onClick={closeModal} /> : null}
+      {initialLoading || loading ? <Spinner /> : null}
+      {(initialError || error) && isModalOpen ? (
+        <InfoWindow text={initialError ?? error} onClick={closeModal} />
+      ) : null}
     </main>
   );
 };
