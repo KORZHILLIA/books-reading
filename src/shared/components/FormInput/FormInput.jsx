@@ -21,6 +21,7 @@ const FormInput = ({
   inputStyle,
 }) => {
   const inputId = useMemo(() => nanoid(2), []);
+
   return (
     <div className={generalStyle} style={{ position: "relative" }}>
       {label ? (
@@ -67,7 +68,7 @@ FormInput.propTypes = {
   max: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   step: PropTypes.number,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   placeholder: PropTypes.string,

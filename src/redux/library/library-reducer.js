@@ -12,7 +12,7 @@ const initialState = {
 
 const booksReducer = createReducer(initialState, (builder) =>
   builder
-    .addCase(libraryActions.getAll, (store, { payload }) => {
+    .addCase(libraryActions.getAllSuccess, (store, { payload }) => {
       return {
         ...store,
         future: distributeBooks(payload, "future"),
@@ -36,6 +36,9 @@ const booksReducer = createReducer(initialState, (builder) =>
 
 const loadingReducer = createReducer(false, (builder) =>
   builder
+    .addCase(libraryActions.getAllRequest, () => true)
+    .addCase(libraryActions.getAllSuccess, () => false)
+    .addCase(libraryActions.getAllError, () => false)
     .addCase(libraryActions.addNewRequest, () => true)
     .addCase(libraryActions.addNewSuccess, () => false)
     .addCase(libraryActions.addNewError, () => false)
@@ -52,6 +55,9 @@ const loadingReducer = createReducer(false, (builder) =>
 
 const errorReducer = createReducer(null, (builder) =>
   builder
+    .addCase(libraryActions.getAllRequest, () => null)
+    .addCase(libraryActions.getAllSuccess, () => null)
+    .addCase(libraryActions.getAllError, (_, { payload }) => payload)
     .addCase(libraryActions.addNewRequest, () => null)
     .addCase(libraryActions.addNewSuccess, () => null)
     .addCase(libraryActions.addNewError, (_, { payload }) => payload)

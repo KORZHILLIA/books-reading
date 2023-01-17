@@ -7,7 +7,6 @@
 
 .item {
   position: relative;
-  @include flex(flex-start, flex-start);
   padding: 20px;
   background-color: $clr-white;
   box-shadow: $shadow-header;
@@ -63,17 +62,51 @@
 }
 
 .titleCell {
-  width: 44%;
+  width: 26%;
+
+  @include mq(desktop) {
+    width: 38%;
+  }
 }
 
 .authorCell {
-  width: 30%;
+  width: 16%;
 }
 
 .yearCell {
-  width: 16%;
+  width: 12%;
 }
 
 .pagesCell {
   width: 7%;
+}
+
+.ratingCell {
+  width: 18%;
+
+  @include mq(desktop) {
+    width: 10%;
+  }
+}
+
+.resumeBtnCell {
+  width: 12%;
+}
+
+.btn {
+  padding: 8px;
+  @include font(14px, 21px);
+  color: $clr-white;
+  background-color: $clr-gray-darkest;
+  box-shadow: $shadow-btn;
+  transition: background-color $transition;
+
+  @include mq(desktop) {
+    padding: 8px 30px;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $clr-gray-darkest-hover;
+  }
 }

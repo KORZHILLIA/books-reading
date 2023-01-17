@@ -5,6 +5,7 @@ import styles from "./mobileBookItem.module.scss";
 
 const MobileBookItem = ({
   id,
+  iconName,
   title,
   author,
   year,
@@ -15,7 +16,7 @@ const MobileBookItem = ({
 }) => {
   return (
     <li className={itemStyles}>
-      <SVGCreator iconName="library" width={22} height={22} />
+      <SVGCreator iconName={iconName} width={22} height={22} />
       <table className={styles.table}>
         <caption className={styles.title}>{title}</caption>
         <tbody>
@@ -44,6 +45,7 @@ const MobileBookItem = ({
 };
 
 MobileBookItem.defaultProps = {
+  iconName: "library",
   title: "...",
   author: "...",
   year: "...",
@@ -54,6 +56,7 @@ MobileBookItem.defaultProps = {
 
 MobileBookItem.propTypes = {
   id: PropTypes.string,
+  iconName: PropTypes.string,
   title: PropTypes.string,
   author: PropTypes.string,
   year: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

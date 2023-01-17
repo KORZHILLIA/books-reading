@@ -1,0 +1,135 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  padding: 20px;
+  background-color: $clr-white;
+
+  @include mq(tablet) {
+    padding: 32px 96px;
+  }
+}
+
+.header {
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $clr-gray-header;
+  @include font(12px, 15px, 600);
+  text-transform: uppercase;
+  text-align: center;
+
+  @include mq(tablet) {
+    margin-bottom: 27px;
+    @include font(14px, 21px, 600);
+  }
+}
+
+.selectWrapper {
+  position: relative;
+}
+
+.select {
+  width: 100%;
+  height: 30px;
+  margin-bottom: 20px;
+  padding-left: 12px;
+  border: 1px solid $clr-field-border;
+  background-color: $clr-body-bg;
+  box-shadow: $shadow-field;
+  outline: none;
+  appearance: none;
+
+  @include mq(tablet-only) {
+    display: block;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.arrow {
+  position: absolute;
+  top: 29px;
+  right: 8px;
+  padding: 4px;
+  background-color: $clr-body-bg;
+  pointer-events: none;
+}
+
+.selectArrow {
+  @extend .arrow;
+  top: 8px;
+
+  @include mq(tablet-only) {
+    right: 65px;
+  }
+}
+
+.form {
+  margin-bottom: 24px;
+  @include flex();
+  flex-wrap: wrap;
+  gap: 28px 20px;
+
+  @include mq(tablet-only) {
+    align-items: flex-end;
+    flex-wrap: nowrap;
+  }
+}
+
+.box {
+  @include flex(flex-start, flex-start, column);
+}
+
+.label {
+  margin-bottom: 4px;
+  @include font(11px, 13px);
+}
+
+.input {
+  width: 110px;
+  padding: 10px;
+  border: 1px solid $clr-field-border;
+  background-color: $clr-body-bg;
+  outline: none;
+
+  &::-webkit-datetime-edit-text,
+  &::-webkit-datetime-edit-day-field,
+  &::-webkit-datetime-edit-month-field,
+  &::-webkit-datetime-edit-year-field {
+    color: $clr-font-main;
+  }
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  @include font(16px, 20px, 600);
+  color: $clr-white;
+  background-color: $clr-accent-form;
+}
+
+.subHeader {
+  @extend .header;
+  @include flex();
+  column-gap: 10px;
+  padding: 0;
+  border: none;
+
+  @include mq(tablet-only) {
+    margin-bottom: 0;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: $clr-gray-header;
+
+    @include mq(tablet-only) {
+      width: 20%;
+    }
+  }
+}

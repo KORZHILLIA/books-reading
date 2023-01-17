@@ -1,0 +1,42 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.general {
+  @include flex(flex-start, flex-start);
+}
+
+.table {
+  margin-left: 12px;
+  @include font();
+}
+
+.title {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.head {
+  width: 80px;
+  padding: 10px 0;
+  color: $clr-gray-support;
+  font-weight: 500;
+}
+
+.provision {
+  padding: 10px 0;
+}
+
+.btn {
+  margin: 20px auto 0;
+  padding: 11px 38px;
+  @include font(14px, 21px);
+  color: $clr-white;
+  background-color: $clr-gray-darkest;
+  box-shadow: $shadow-btn;
+  transition: background-color $transition;
+
+  &:hover,
+  &:focus {
+    background-color: $clr-gray-darkest-hover;
+  }
+}

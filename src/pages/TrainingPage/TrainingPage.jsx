@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MyGoals from "../../modules/MyGoals";
 import TrainingInterval from "../../modules/TrainingInterval/TrainingInterval";
 import TrainingBooksSelector from "../../shared/components/TrainingBooksSelector";
 import TrainingBooks from "../../modules/TrainingBooks";
+import ActiveTrainingBooks from "../../modules/ActiveTrainingBooks";
+import Countdown from "../../modules/Countdown/Countdown";
+import TrainingResults from "../../modules/TrainingResults";
 import Spinner from "../../shared/components/Spinner";
 import InfoWindow from "../../shared/components/InfoWindow";
 import ConfirmWindow from "../../shared/components/ConfirmWindow";
@@ -13,28 +16,37 @@ import {
   relocateBookFromPresentToFuture,
 } from "../../redux/library/library-operations";
 import librarySelectors from "../../redux/library/library-selectors";
-import { check, add } from "../../shared/api/training";
+import trainingSelectors from "../../redux/training/training-selectors";
+import {
+  checkCurrentTraining,
+  addNewTraining,
+  cleanTraining,
+  addTrainingResult,
+} from "../../redux/training/training-operations";
+import makeFullTime from "../../helpers/makeFullTime";
 import styles from "./trainingPage.module.scss";
 
-const initialState = {
-  initialLoading: false,
-  initialError: null,
-  training: null,
-};
-
 const TrainingPage = () => {
-  const [state, setState] = useState(initialState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStartBtnVisible, setIsStartBtnVisible] = useState(false);
   const [trainingTimes, setTrainingTimes] = useState([]);
   const [isTrainingReady, setIsTrainingReady] = useState(false);
+  const [clearTraining, setClearTraining] = useState(false);
+  const [isTrainingStarted, setIsTrainingStarted] = useState(false);
 
-  const { initialLoading, initialError, training } = state;
   const [start, finish] = trainingTimes;
 
-  const { loading, error } = useSelector(librarySelectors.library);
+  const { loading: libraryLoading, error: libraryError } = useSelector(
+    librarySelectors.library
+  );
   const presentBooks = useSelector(librarySelectors.libraryPresent);
+  const {
+    content: training,
+    loading: trainingLoading,
+    error: trainingError,
+  } = useSelector(trainingSelectors.training);
   const dispatch = useDispatch();
+  const isFirstRender = useRef(true);
 
   const closeModal = () => setIsModalOpen(false);
 
@@ -48,11 +60,12 @@ const TrainingPage = () => {
 
   const defineTrainingTimes = (times) => {
     const { start, finish } = times;
-    setTrainingTimes([start, finish]);
+    const fullStart = `${start} 00:00:00`;
+    const fullFinish = `${finish} 23:59:59`;
+    setTrainingTimes([fullStart, fullFinish]);
   };
 
   const checkTraining = () => {
-    // const [start, finish] = trainingTimes;
     if (start >= finish) {
       setIsTrainingReady(false);
       setIsModalOpen(true);
@@ -69,57 +82,73 @@ const TrainingPage = () => {
 
   const startTraining = async () => {
     setIsModalOpen(false);
-    setState((prevState) => ({ ...prevState, initialLoading: true }));
-    try {
-      const presentBooksIds = presentBooks.reduce(
-        (acc, { _id }) => [...acc, _id],
-        []
-      );
-      const trainingData = { start, finish, books: [...presentBooksIds] };
-      const training = await add(trainingData);
-      setState((prevState) => ({
-        ...prevState,
-        training,
-        initialLoading: false,
-      }));
-    } catch (error) {
-      setState((prevState) => ({
-        ...prevState,
-        training: null,
-        initialLoading: false,
-        initialError: error.message,
-      }));
-      setIsModalOpen(true);
-    }
+    setIsStartBtnVisible(false);
+    const presentBooksIds = presentBooks.reduce(
+      (acc, { _id }) => [...acc, _id],
+      []
+    );
+    const trainingData = { start, finish, books: [...presentBooksIds] };
+    dispatch(addNewTraining(trainingData));
+  };
+
+  const activateTrainingCleaning = () => {
+    setClearTraining(true);
+    setIsModalOpen(true);
+  };
+
+  const refuseTrainingCleaning = () => {
+    setClearTraining(false);
+    setIsModalOpen(false);
+  };
+
+  const agreeTrainingCleaning = () => {
+    setIsTrainingStarted(false);
+    setTrainingTimes([]);
+    setClearTraining(false);
+    setIsModalOpen(false);
+    dispatch(cleanTraining());
+  };
+
+  const activateTrainingStart = () => setIsTrainingStarted(true);
+
+  const addResult = (resultData) => {
+    const { bookId, date, pages } = resultData;
+    const preparedDate = makeFullTime(date);
+    const preparedPages = Number(pages);
+    dispatch(
+      addTrainingResult({ bookId, date: preparedDate, pages: preparedPages })
+    );
   };
 
   useEffect(() => {
-    const checkTraining = async () => {
-      setState((prevState) => ({ ...prevState, loading: true }));
-      try {
-        const training = await check();
-        setState((prevState) => ({
-          ...prevState,
-          training,
-          initialLoading: false,
-        }));
-      } catch (error) {
-        setState((prevState) => ({
-          ...prevState,
-          initialError: error.message,
-        }));
-        setIsModalOpen(true);
-      }
-    };
-    checkTraining();
-    if (error) {
+    if (libraryError || trainingError || training?.isFinished) {
       setIsModalOpen(true);
+      return;
     }
-  }, [error]);
+    if (isFirstRender.current) {
+      dispatch(checkCurrentTraining());
+      isFirstRender.current = false;
+    }
+  }, [dispatch, libraryError, trainingError]);
 
   return (
     <main className={styles.main}>
       <div className="container">
+        {training ? (
+          <ButtonUniversal
+            type="button"
+            text="Clear training"
+            onClick={activateTrainingCleaning}
+            btnStyles={styles.clearBtn}
+          />
+        ) : null}
+        {training ? (
+          <Countdown
+            start={training.start}
+            finish={training.finish}
+            startTraining={activateTrainingStart}
+          />
+        ) : null}
         <MyGoals
           isTrainingActive={training?.isActive}
           books={!training ? presentBooks : training.books}
@@ -134,24 +163,38 @@ const TrainingPage = () => {
         {!training ? (
           <TrainingBooksSelector onSubmit={addBookToPresentList} />
         ) : null}
-        <TrainingBooks onCloseBtnClick={addBookToFutureList} />
+        {!training ? (
+          <TrainingBooks onCloseBtnClick={addBookToFutureList} />
+        ) : (
+          <ActiveTrainingBooks books={training.books} />
+        )}
+        {training && isTrainingStarted ? (
+          <TrainingResults
+            start={training?.start}
+            finish={training?.finish}
+            onSubmit={addResult}
+          />
+        ) : null}
       </div>
-      {initialLoading || loading ? <Spinner /> : null}
-      {(initialError || error) && isModalOpen ? (
+      {libraryLoading || trainingLoading ? <Spinner /> : null}
+      {(libraryError || trainingError) && isModalOpen ? (
         <InfoWindow
-          text={initialError ? initialError : error}
+          text={libraryError ? libraryError : trainingError}
           onClick={closeModal}
         />
       ) : null}
-      {!isTrainingReady && !initialError && isModalOpen ? (
+      {!isTrainingReady &&
+      !isTrainingStarted &&
+      !trainingError &&
+      isModalOpen ? (
         <InfoWindow
           text="Finish date must be after start date"
           onClick={closeModal}
         />
       ) : null}
-      {isTrainingReady && isModalOpen ? (
+      {isTrainingReady && !clearTraining && isModalOpen ? (
         <ConfirmWindow
-          text="Are you sure? You won't be able to change training conditions"
+          text="Are you sure? You won't be able to change training conditions!"
           onYesClick={startTraining}
           onCancelClick={cancelTraining}
         />
@@ -165,6 +208,13 @@ const TrainingPage = () => {
           }
           onClick={checkTraining}
           disabled={!Boolean(presentBooks.length)}
+        />
+      ) : null}
+      {clearTraining && isModalOpen ? (
+        <ConfirmWindow
+          text="Are you sure? It will be impossible to get things back!"
+          onYesClick={agreeTrainingCleaning}
+          onCancelClick={refuseTrainingCleaning}
         />
       ) : null}
     </main>

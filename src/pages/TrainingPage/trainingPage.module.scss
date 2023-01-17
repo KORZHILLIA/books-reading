@@ -25,3 +25,14 @@
   color: $clr-gray;
   background-color: #f25037d1;
 }
+
+.clearBtn {
+  width: 170px;
+  @include flex();
+  margin: 0 auto 20px;
+  padding: 12px 10px;
+  border-radius: 4px;
+  @include font(20px, 24px);
+  color: $clr-white;
+  background-color: $clr-accent-form;
+}

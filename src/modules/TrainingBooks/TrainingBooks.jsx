@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 import useBreakpoints from "../../shared/hooks/useBreakpoints";
 import SVGCreator from "../../shared/components/SVGCreator";
 import TrainingBooksTable from "../../shared/components/TrainingBooksTable";
@@ -68,6 +69,14 @@ const TrainingBooks = ({ onCloseBtnClick }) => {
   ) : (
     <TrainingBooksTable>{elements}</TrainingBooksTable>
   );
+};
+
+TrainingBooks.defaultProps = {
+  onCloseBtnClick: () => {},
+};
+
+TrainingBooks.propTypes = {
+  onCloseBtnClick: PropTypes.func,
 };
 
 export default TrainingBooks;

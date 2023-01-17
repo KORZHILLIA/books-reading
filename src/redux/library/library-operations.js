@@ -1,6 +1,20 @@
 import * as libraryApi from "../../shared/api/library";
 import * as libraryActions from "./library-actions";
 
+export const getAllBooks = () => {
+  const func = async (dispatch) => {
+    dispatch(libraryActions.getAllRequest());
+    try {
+      const books = await libraryApi.getAll();
+      dispatch(libraryActions.getAllSuccess(books));
+    } catch (error) {
+      const { message } = error.response.data;
+      dispatch(libraryActions.getAllError(message));
+    }
+  };
+  return func;
+};
+
 export const addNewBook = (bookData) => {
   const func = async (dispatch) => {
     dispatch(libraryActions.addNewRequest());
@@ -35,7 +49,7 @@ export const relocateBookFromFutureToPresent = (bookId) => {
     try {
       const books = await libraryApi.relocateFromFutureToPresent(bookId);
       dispatch(libraryActions.relocateBookFromFutureToPresentSuccess());
-      dispatch(libraryActions.getAll(books));
+      dispatch(libraryActions.getAllSuccess(books));
     } catch (error) {
       const { message } = error.response.data;
       dispatch(libraryActions.relocateBookFromFutureToPresentError(message));
@@ -50,7 +64,7 @@ export const relocateBookFromPresentToFuture = (bookId) => {
     try {
       const books = await libraryApi.relocateFromPresentToFuture(bookId);
       dispatch(libraryActions.relocateBookFromPresentToFutureSuccess());
-      dispatch(libraryActions.getAll(books));
+      dispatch(libraryActions.getAllSuccess(books));
     } catch (error) {
       const { message } = error.response.data;
       dispatch(libraryActions.relocateBookFromPresentToFutureError(message));

@@ -1,0 +1,43 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  margin-bottom: 40px;
+}
+
+.header {
+  margin-bottom: 8px;
+  @include font(14px, 21px);
+  color: $clr-gray-support;
+  text-align: center;
+}
+
+.countdown {
+  @include flex();
+  padding: 8px 0;
+  box-shadow: $shadow-goals;
+}
+
+.item {
+  @include flex(flex-start, flex-start, column);
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.digit {
+  margin-bottom: 1px;
+  @include font(25px, 38px, 700);
+  color: $clr-accent;
+}
+
+.text {
+  @include font(10px, 12px);
+  color: $clr-gray-support;
+  text-transform: uppercase;
+}
+
+.days {
+  padding-left: 4px;
+}

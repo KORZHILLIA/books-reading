@@ -1,0 +1,22 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.list {
+  @include flex(flex-start);
+  margin-bottom: 8px;
+  column-gap: 4px;
+}
+
+// .item {
+//   cursor: pointer;
+// }
+
+.svgEmpty {
+  cursor: pointer;
+  fill: $clr-white;
+}
+
+.svgFilled {
+  @extend .svgEmpty;
+  fill: $clr-accent-form;
+}

@@ -1,0 +1,9 @@
+@import "../../../styles/utils/mixins";
+
+.checkbox {
+  width: 15px;
+  height: 15px;
+  @include flex();
+  padding: 2px;
+  border-radius: 1px;
+}

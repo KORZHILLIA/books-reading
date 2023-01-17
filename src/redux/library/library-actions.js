@@ -1,6 +1,8 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const getAll = createAction("library/getAll");
+export const getAllRequest = createAction("library/getAll/request");
+export const getAllSuccess = createAction("library/getAll/success");
+export const getAllError = createAction("library/getAll/error");
 
 export const addNewRequest = createAction("library/add/request");
 export const addNewSuccess = createAction("library/add/success");

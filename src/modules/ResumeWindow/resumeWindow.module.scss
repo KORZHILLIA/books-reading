@@ -1,0 +1,57 @@
+@import "../../styles/base/variables";
+@import "../../styles/utils/mixins";
+
+.general {
+  padding: 20px;
+  padding-bottom: 40px;
+  background-color: $clr-white;
+}
+
+.ratingHeader,
+.textareaLabel {
+  @include font(16px, 20px);
+}
+
+.ratingHeader {
+  margin-bottom: 8px;
+}
+
+.textareaLabel {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 8px;
+  resize: none;
+  border: 1px solid $clr-gray;
+  background-color: transparent;
+  outline: none;
+
+  &:focus {
+    border-color: $clr-gray-dark;
+  }
+}
+
+.btnsContainer {
+  @include flex();
+  column-gap: 16px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.backBtn {
+  min-width: 90px;
+  padding: 8px;
+  @include font(14px, 21px);
+  border: 1px solid $clr-font-main;
+  background-color: transparent;
+}
+
+.saveBtn {
+  @extend .backBtn;
+  border-color: $clr-accent-form;
+  color: $clr-white;
+  background-color: $clr-accent-form;
+}

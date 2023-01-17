@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import HowToUseWindow from "../../modules/HowToUseWindow";
 import AddBookForm from "../../modules/AddBookForm";
 import ButtonUniversal from "../../shared/components/ButtonUniversal";
+import AlreadyRead from "../../modules/AlreadyRead";
 import GoingToRead from "../../modules/GoingToRead";
+import ReadingNow from "../../modules/ReadingNow";
 import Spinner from "../../shared/components/Spinner";
 import InfoWindow from "../../shared/components/InfoWindow";
 import AddBtn from "../../shared/components/AddBtn";
 import AddBookFormWindow from "../../modules/AddBookFormWindow";
-import { getAll } from "../../shared/api/library";
-import * as libraryActions from "../../redux/library/library-actions";
+import ResumeWindow from "../../modules/ResumeWindow";
+import { getAllBooks } from "../../redux/library/library-operations";
 import {
   addNewBook,
   removeNewBook,
@@ -18,26 +20,20 @@ import {
 import librarySelectors from "../../redux/library/library-selectors";
 import styles from "./homePage.module.scss";
 
-const initialState = {
-  initialBooks: [],
-  initialLoading: false,
-  initialError: null,
-};
-
 const HomePage = () => {
-  const [state, setState] = useState(initialState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isAddBtnVisible, setIsAddBtnVisible] = useState(false);
   const [isFormWindowVisible, setIsFormWindowVisible] = useState(false);
+  const [isResumeWindowOpen, setIsResumeWindowOpen] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { initialLoading, initialError } = state;
   const { loading, error } = useSelector(librarySelectors.library);
-  const books = useSelector(librarySelectors.libraryFuture);
-  // const error = useSelector(librarySelectors.defineLibraryError);
+  const futureBooks = useSelector(librarySelectors.libraryFuture);
+  const presentBooks = useSelector(librarySelectors.libraryPresent);
+  const pastBooks = useSelector(librarySelectors.libraryPast);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -45,34 +41,12 @@ const HomePage = () => {
   const closeForm = () => setIsFormOpen(false);
   const openFormWindow = () => setIsFormWindowVisible(true);
   const closeFormWindow = () => setIsFormWindowVisible(false);
+  const openResumeWindow = () => setIsResumeWindowOpen(true);
+  const closeResumeWindow = () => setIsResumeWindowOpen(false);
 
   useEffect(() => {
-    const getAllBooks = async () => {
-      setState((prevState) => ({
-        ...prevState,
-        initialLoading: true,
-        initialError: null,
-      }));
-      try {
-        const initialBooks = await getAll();
-        setState((prevState) => ({
-          ...prevState,
-          initialBooks,
-          initialLoading: false,
-          initialError: null,
-        }));
-        dispatch(libraryActions.getAll(initialBooks));
-      } catch (error) {
-        setState((prevState) => ({
-          ...prevState,
-          initialLoading: false,
-          initialError: error.message,
-        }));
-        setIsModalOpen(true);
-      }
-    };
-    getAllBooks();
-  }, []);
+    dispatch(getAllBooks());
+  }, [dispatch]);
 
   const addBook = (book) => dispatch(addNewBook(book));
   const addBookFromWindow = (book) => {
@@ -87,6 +61,22 @@ const HomePage = () => {
     } else {
       setIsAddBtnVisible(false);
     }
+  };
+
+  const showResumeWindow = () => {
+    openResumeWindow();
+    openModal();
+  };
+
+  const saveResume = (resumeData) => {
+    closeModal();
+    closeResumeWindow();
+    console.log(resumeData);
+  };
+
+  const hideResumeWindow = () => {
+    closeResumeWindow();
+    closeModal();
   };
 
   return (
@@ -107,13 +97,14 @@ const HomePage = () => {
         {isFormOpen ? (
           <AddBookForm onClose={closeForm} onSubmit={addBook} />
         ) : null}
-        {!initialError && !error && isModalOpen ? (
-          <HowToUseWindow onClick={closeModal} />
+        {pastBooks.length ? (
+          <AlreadyRead books={pastBooks} onClick={showResumeWindow} />
         ) : null}
-        {books.length ? (
-          <GoingToRead books={books} onCloseBtnClick={deleteBook} />
+        {presentBooks.length ? <ReadingNow books={presentBooks} /> : null}
+        {futureBooks.length ? (
+          <GoingToRead books={futureBooks} onCloseBtnClick={deleteBook} />
         ) : null}
-        {books.length ? (
+        {futureBooks.length ? (
           <ButtonUniversal
             type="button"
             text="My training"
@@ -122,6 +113,10 @@ const HomePage = () => {
           />
         ) : null}
       </div>
+      {loading ? <Spinner /> : null}
+      {!error && !isResumeWindowOpen && isModalOpen ? (
+        <HowToUseWindow onClick={closeModal} />
+      ) : null}
       <AddBtn onClick={openFormWindow} isVisible={isAddBtnVisible} />
       {isFormWindowVisible ? (
         <AddBookFormWindow
@@ -130,9 +125,11 @@ const HomePage = () => {
           onSubmit={addBookFromWindow}
         />
       ) : null}
-      {initialLoading || loading ? <Spinner /> : null}
-      {(initialError || error) && isModalOpen ? (
-        <InfoWindow text={initialError ?? error} onClick={closeModal} />
+      {error && isModalOpen ? (
+        <InfoWindow text={error} onClick={closeModal} />
+      ) : null}
+      {!error && isResumeWindowOpen && isModalOpen ? (
+        <ResumeWindow onBackClick={hideResumeWindow} onSaveClick={saveResume} />
       ) : null}
     </main>
   );

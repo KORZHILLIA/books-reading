@@ -1,0 +1,15 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.list {
+  @include flex(flex-start);
+  column-gap: 3px;
+}
+
+.svgEmpty {
+  fill: $clr-white;
+}
+
+.svgFilled {
+  fill: $clr-accent-form;
+}
