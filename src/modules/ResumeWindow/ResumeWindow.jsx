@@ -1,18 +1,31 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import RatingStarsAdjustible from "../RatingStarsAdjustable";
 import Backdrop from "../../shared/components/Backdrop";
 import ButtonUniversal from "../../shared/components/ButtonUniversal";
+import librarySelectors from "../../redux/library/library-selectors";
 import styles from "./resumeWindow.module.scss";
 
 const initialState = {
   rating: 0,
   resume: "",
+  activateWarn: false,
 };
 
-const ResumeWindow = ({ onBackClick, onSaveClick }) => {
+const ResumeWindow = ({ bookId, onBackClick, onSaveClick }) => {
   const [state, setState] = useState(initialState);
-  const { resume } = state;
+  const { rating, resume, activateWarn } = state;
+
+  const { resume: currentResume } = useSelector(
+    librarySelectors.libraryPast
+  ).find(({ _id }) => _id === bookId);
+
+  useEffect(() => {
+    if (currentResume) {
+      setState((prevState) => ({ ...prevState, resume: currentResume }));
+    }
+  }, []);
 
   const setRating = (rating) => {
     setState((prevState) => ({ ...prevState, rating }));
@@ -23,13 +36,29 @@ const ResumeWindow = ({ onBackClick, onSaveClick }) => {
     setState((prevState) => ({ ...prevState, resume: value }));
   };
 
-  const setFullInfo = () => onSaveClick(state);
+  const setFullInfo = () => {
+    if (!rating) {
+      setState((prevState) => ({ ...prevState, activateWarn: true }));
+      setTimeout(
+        () => setState((prevState) => ({ ...prevState, activateWarn: false })),
+        1000
+      );
+      return;
+    } else {
+      onSaveClick({ rating, resume });
+    }
+  };
 
   return (
     <Backdrop close={onBackClick}>
       <div className={styles.general}>
         <h2 className={styles.ratingHeader}>Choose rating of the book</h2>
-        <RatingStarsAdjustible qty={5} defineRating={setRating} />
+        <RatingStarsAdjustible
+          bookId={bookId}
+          qty={5}
+          defineRating={setRating}
+          activateWarn={activateWarn}
+        />
         <label htmlFor="resume" className={styles.textareaLabel}>
           Resume
         </label>
@@ -60,6 +89,12 @@ const ResumeWindow = ({ onBackClick, onSaveClick }) => {
       </div>
     </Backdrop>
   );
+};
+
+ResumeWindow.propTypes = {
+  bookId: PropTypes.string.isRequired,
+  onBackClick: PropTypes.func.isRequired,
+  onSaveClick: PropTypes.func.isRequired,
 };
 
 export default ResumeWindow;

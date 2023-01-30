@@ -43,7 +43,7 @@ const AlreadyRead = ({ books, onClick }) => {
             type="button"
             text="Resume"
             btnStyles={styles.btn}
-            onClick={onClick}
+            onClick={() => onClick(_id)}
           />
         </td>
       </tr>

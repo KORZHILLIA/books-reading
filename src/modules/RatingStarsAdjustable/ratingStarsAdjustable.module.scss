@@ -7,16 +7,29 @@
   column-gap: 4px;
 }
 
-// .item {
-//   cursor: pointer;
-// }
-
 .svgEmpty {
   cursor: pointer;
   fill: $clr-white;
 }
 
+.svgEmptyAnimated {
+  @extend .svgEmpty;
+  animation: warn 0.5s ease;
+}
+
 .svgFilled {
   @extend .svgEmpty;
   fill: $clr-accent-form;
+}
+
+@keyframes warn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5) translateY(-4px);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

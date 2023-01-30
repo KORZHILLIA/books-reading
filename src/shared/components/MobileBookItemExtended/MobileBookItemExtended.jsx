@@ -46,7 +46,7 @@ const MobileBookItemExtended = ({
       <ButtonUniversal
         type="button"
         text="Resume"
-        onClick={onBtnClick}
+        onClick={() => onBtnClick(id)}
         btnStyles={styles.btn}
       />
     </li>

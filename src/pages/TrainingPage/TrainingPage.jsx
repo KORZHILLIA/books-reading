@@ -7,13 +7,16 @@ import TrainingBooks from "../../modules/TrainingBooks";
 import ActiveTrainingBooks from "../../modules/ActiveTrainingBooks";
 import Countdown from "../../modules/Countdown/Countdown";
 import TrainingResults from "../../modules/TrainingResults";
+import Chart from "../../shared/components/Chart";
 import Spinner from "../../shared/components/Spinner";
 import InfoWindow from "../../shared/components/InfoWindow";
 import ConfirmWindow from "../../shared/components/ConfirmWindow";
+import FinishedTrainingWindow from "../../modules/FinishedTrainingWindow";
 import ButtonUniversal from "../../shared/components/ButtonUniversal";
 import {
   relocateBookFromFutureToPresent,
   relocateBookFromPresentToFuture,
+  getAllBooks,
 } from "../../redux/library/library-operations";
 import librarySelectors from "../../redux/library/library-selectors";
 import trainingSelectors from "../../redux/training/training-selectors";
@@ -22,8 +25,10 @@ import {
   addNewTraining,
   cleanTraining,
   addTrainingResult,
+  makeTrainingInactive,
 } from "../../redux/training/training-operations";
 import makeFullTime from "../../helpers/makeFullTime";
+import { clearLS } from "../../helpers/LSHandling";
 import styles from "./trainingPage.module.scss";
 
 const TrainingPage = () => {
@@ -45,6 +50,9 @@ const TrainingPage = () => {
     loading: trainingLoading,
     error: trainingError,
   } = useSelector(trainingSelectors.training);
+  const isTrainingActive = training?.isActive;
+  const isTrainingFinished = training?.isFinished;
+
   const dispatch = useDispatch();
   const isFirstRender = useRef(true);
 
@@ -60,9 +68,7 @@ const TrainingPage = () => {
 
   const defineTrainingTimes = (times) => {
     const { start, finish } = times;
-    const fullStart = `${start} 00:00:00`;
-    const fullFinish = `${finish} 23:59:59`;
-    setTrainingTimes([fullStart, fullFinish]);
+    setTrainingTimes([start, finish]);
   };
 
   const checkTraining = () => {
@@ -87,7 +93,15 @@ const TrainingPage = () => {
       (acc, { _id }) => [...acc, _id],
       []
     );
-    const trainingData = { start, finish, books: [...presentBooksIds] };
+    const fullStart = `${start} 00:00:00`;
+    const fullFinish = `${finish} 23:59:59`;
+    const trainingData = {
+      start: fullStart,
+      finish: fullFinish,
+      books: [...presentBooksIds],
+    };
+    clearLS("start");
+    clearLS("finish");
     dispatch(addNewTraining(trainingData));
   };
 
@@ -109,7 +123,10 @@ const TrainingPage = () => {
     dispatch(cleanTraining());
   };
 
-  const activateTrainingStart = () => setIsTrainingStarted(true);
+  const activateTrainingStart = () => {
+    setIsTrainingReady(true);
+    setIsTrainingStarted(true);
+  };
 
   const addResult = (resultData) => {
     const { bookId, date, pages } = resultData;
@@ -120,16 +137,34 @@ const TrainingPage = () => {
     );
   };
 
+  const makeInactive = () => {
+    closeModal();
+    dispatch(makeTrainingInactive());
+  };
+
   useEffect(() => {
-    if (libraryError || trainingError || training?.isFinished) {
+    if (
+      libraryError ||
+      trainingError ||
+      (isTrainingFinished && isTrainingActive)
+    ) {
       setIsModalOpen(true);
-      return;
+    }
+    if (isTrainingFinished && !isTrainingActive) {
+      setIsTrainingReady(true);
+      setIsTrainingStarted(true);
     }
     if (isFirstRender.current) {
       dispatch(checkCurrentTraining());
       isFirstRender.current = false;
     }
-  }, [dispatch, libraryError, trainingError]);
+  }, [
+    dispatch,
+    libraryError,
+    trainingError,
+    isTrainingActive,
+    isTrainingFinished,
+  ]);
 
   return (
     <main className={styles.main}>
@@ -142,7 +177,7 @@ const TrainingPage = () => {
             btnStyles={styles.clearBtn}
           />
         ) : null}
-        {training ? (
+        {training && !isTrainingFinished ? (
           <Countdown
             start={training.start}
             finish={training.finish}
@@ -150,7 +185,7 @@ const TrainingPage = () => {
           />
         ) : null}
         <MyGoals
-          isTrainingActive={training?.isActive}
+          isTrainingActive={isTrainingActive}
           books={!training ? presentBooks : training.books}
           times={!training ? trainingTimes : [training.start, training.finish]}
         />
@@ -168,12 +203,9 @@ const TrainingPage = () => {
         ) : (
           <ActiveTrainingBooks books={training.books} />
         )}
-        {training && isTrainingStarted ? (
-          <TrainingResults
-            start={training?.start}
-            finish={training?.finish}
-            onSubmit={addResult}
-          />
+        {training ? <Chart /> : null}
+        {training && (isTrainingStarted || isTrainingFinished) ? (
+          <TrainingResults start={training?.start} onSubmit={addResult} />
         ) : null}
       </div>
       {libraryLoading || trainingLoading ? <Spinner /> : null}
@@ -192,7 +224,12 @@ const TrainingPage = () => {
           onClick={closeModal}
         />
       ) : null}
-      {isTrainingReady && !clearTraining && isModalOpen ? (
+      {isTrainingReady &&
+      !clearTraining &&
+      !isTrainingFinished &&
+      !trainingError &&
+      !libraryError &&
+      isModalOpen ? (
         <ConfirmWindow
           text="Are you sure? You won't be able to change training conditions!"
           onYesClick={startTraining}
@@ -215,6 +252,12 @@ const TrainingPage = () => {
           text="Are you sure? It will be impossible to get things back!"
           onYesClick={agreeTrainingCleaning}
           onCancelClick={refuseTrainingCleaning}
+        />
+      ) : null}
+      {isTrainingFinished && isTrainingActive && isModalOpen ? (
+        <FinishedTrainingWindow
+          onNewClick={agreeTrainingCleaning}
+          onBackClick={makeInactive}
         />
       ) : null}
     </main>

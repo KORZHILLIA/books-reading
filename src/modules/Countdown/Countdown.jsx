@@ -13,7 +13,7 @@ const Countdown = ({ start, finish, startTraining }) => {
   const initialTime = isTrainingStarted ? finishMs : startMs;
   const [ms, setMs] = useState(initialTime - nowMs);
   const { days, hours, minutes, seconds } = makeCountdown(ms);
-  // console.log(initialTime - new Date().getTime());
+
   useEffect(() => {
     if (startNotCommenced.current && isTrainingStarted) {
       startTraining();
@@ -29,7 +29,7 @@ const Countdown = ({ start, finish, startTraining }) => {
   return (
     <div className={styles.general}>
       <p className={styles.header}>
-        {isTrainingStarted ? "Goals countdown" : "Training will start in"}
+        {isTrainingStarted ? "Goals countdown" : "Training will start in..."}
       </p>
       <ul className={styles.countdown}>
         <li className={styles.item}>

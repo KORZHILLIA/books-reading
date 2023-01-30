@@ -72,3 +72,18 @@ export const relocateBookFromPresentToFuture = (bookId) => {
   };
   return func;
 };
+
+export const changeBookResume = (bookId, resumeData) => {
+  const func = async (dispatch) => {
+    dispatch(libraryActions.resumeRequest());
+    try {
+      const books = await libraryApi.changeResume(bookId, resumeData);
+      dispatch(libraryActions.resumeSuccess());
+      dispatch(libraryActions.getAllSuccess(books));
+    } catch (error) {
+      const { message } = error.response.data;
+      dispatch(libraryActions.resumeError(message));
+    }
+  };
+  return func;
+};

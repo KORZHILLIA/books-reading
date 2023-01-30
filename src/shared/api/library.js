@@ -24,3 +24,8 @@ export const relocateFromPresentToFuture = async (bookId) => {
   const { data } = await instance.post(`books/relocate/prtf/${bookId}`);
   return data.books;
 };
+
+export const changeResume = async (bookId, resumeData) => {
+  const { data } = await instance.patch(`books/resume/${bookId}`, resumeData);
+  return data.books;
+};

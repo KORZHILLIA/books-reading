@@ -58,3 +58,17 @@ export const addTrainingResult = (resultData) => {
   };
   return func;
 };
+
+export const makeTrainingInactive = () => {
+  const func = async (dispatch) => {
+    dispatch(trainingActions.makeInactiveRequest());
+    try {
+      const training = await trainingApi.makeInactive();
+      dispatch(trainingActions.makeInactiveSuccess(training));
+    } catch (error) {
+      const { message } = error.response.data;
+      dispatch(trainingActions.makeInactiveError(message));
+    }
+  };
+  return func;
+};

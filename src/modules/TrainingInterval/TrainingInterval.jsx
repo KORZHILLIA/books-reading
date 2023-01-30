@@ -1,9 +1,9 @@
-import { useEffect, useMemo, memo } from "react";
+import { useState, useEffect, useMemo, memo } from "react";
 import PropTypes from "prop-types";
-import useForm from "../../shared/hooks/useForm";
 import FormInput from "../../shared/components/FormInput";
 import DateInputDecorator from "../../shared/components/DateInputDecorator";
 import SVGCreator from "../../shared/components/SVGCreator";
+import { setLS, getLS } from "../../helpers/LSHandling";
 import styles from "./trainingInterval.module.scss";
 
 const initialState = {
@@ -15,13 +15,25 @@ const TrainingInterval = ({ setBtn, setTimes }) => {
   const date = useMemo(() => new Date(), []);
   const minDate = useMemo(() => date.toISOString().slice(0, 10), [date]);
 
-  const { formState, onInputChange } = useForm({
-    initialState,
-  });
-  const { start, finish } = formState;
+  const [state, setState] = useState(initialState);
+  const { start, finish } = state;
+
+  const onChange = ({ target }) => {
+    const { value, name } = target;
+    setState((prevState) => ({ ...prevState, [name]: value }));
+    setLS(name, value);
+  };
 
   useEffect(() => {
-    setTimes(formState);
+    const start = getLS("start");
+    const finish = getLS("finish");
+    if (start) {
+      setState((prevState) => ({ ...prevState, start }));
+    }
+    if (finish) {
+      setState((prevState) => ({ ...prevState, finish }));
+    }
+    setTimes(state);
     if (start && finish) {
       setBtn(true);
     } else {
@@ -40,7 +52,7 @@ const TrainingInterval = ({ setBtn, setTimes }) => {
           value={start}
           required={true}
           min={minDate}
-          onChange={onInputChange}
+          onChange={onChange}
           inputStyle={styles.input}
         >
           <div className={styles.arrow}>
@@ -55,7 +67,7 @@ const TrainingInterval = ({ setBtn, setTimes }) => {
           value={finish}
           required={true}
           min={minDate}
-          onChange={onInputChange}
+          onChange={onChange}
           inputStyle={styles.input}
         >
           <div className={styles.arrow}>

@@ -9,7 +9,7 @@ import SVGCreator from "../../shared/components/SVGCreator";
 import trainingSelectors from "../../redux/training/training-selectors";
 import styles from "./trainingResults.module.scss";
 
-const TrainingResults = ({ start, finish, onSubmit }) => {
+const TrainingResults = ({ start, onSubmit }) => {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), [start]);
   const initialState = {
     bookId: "",
@@ -29,6 +29,21 @@ const TrainingResults = ({ start, finish, onSubmit }) => {
     onSubmit,
     reset: true,
   });
+  const { bookId } = formState;
+
+  const pagesRead = training?.content.results.reduce((acc, el) => {
+    if (el.bookId === bookId) {
+      return acc + el.pages;
+    }
+    return acc;
+  }, 0);
+
+  const isTrainingActive = training?.content.isActive;
+
+  const requiredBook = training?.content.books.find((el) => el._id === bookId);
+  const pagesTotal = requiredBook?.pages;
+
+  const pagesRemained = pagesTotal - pagesRead;
 
   const selectorElements = presentBooks.map(({ _id, title }) => (
     <option key={_id} value={_id}>
@@ -44,59 +59,63 @@ const TrainingResults = ({ start, finish, onSubmit }) => {
 
   return (
     <div className={styles.general}>
-      <h2 className={styles.header}>Results</h2>
-      <div className={styles.selectWrapper}>
-        <select
-          ref={selectRef}
-          className={styles.select}
-          name="bookId"
-          onChange={onInputChange}
-        >
-          <option key="ownId" value="">
-            Choose the book
-          </option>
-          {selectorElements}
-        </select>
-        <div className={styles.selectArrow}>
-          <SVGCreator iconName="triangle" width={13} height={7} />
-        </div>
-      </div>
-      <form onSubmit={onFormSubmit} className={styles.form}>
-        <FormInput
-          label="Date"
-          type="date"
-          name="date"
-          value={date}
-          min={preparedStart}
-          max={today}
-          onChange={onInputChange}
-          generalStyle={styles.box}
-          labelStyle={styles.label}
-          inputStyle={styles.input}
-        >
-          <div className={styles.arrow}>
-            <SVGCreator iconName="triangle" width={13} height={7} />
+      {isTrainingActive ? (
+        <>
+          <h2 className={styles.header}>Results</h2>
+          <div className={styles.selectWrapper}>
+            <select
+              ref={selectRef}
+              className={styles.select}
+              name="bookId"
+              onChange={onInputChange}
+            >
+              <option key="ownId" value="">
+                Choose the book
+              </option>
+              {selectorElements}
+            </select>
+            <div className={styles.selectArrow}>
+              <SVGCreator iconName="triangle" width={13} height={7} />
+            </div>
           </div>
-        </FormInput>
-        <FormInput
-          label="Amount of pages"
-          type="number"
-          name="pages"
-          value={pages}
-          min="1"
-          max="1000"
-          onChange={onInputChange}
-          generalStyle={styles.box}
-          labelStyle={styles.label}
-          inputStyle={styles.input}
-        />
-        <ButtonUniversal
-          type="submit"
-          text="Add result"
-          btnStyles={styles.btn}
-          onClick={resetSelect}
-        />
-      </form>
+          <form onSubmit={onFormSubmit} className={styles.form}>
+            <FormInput
+              label="Date"
+              type="date"
+              name="date"
+              value={date}
+              min={preparedStart}
+              max={today}
+              onChange={onInputChange}
+              generalStyle={styles.box}
+              labelStyle={styles.label}
+              inputStyle={styles.input}
+            >
+              <div className={styles.arrow}>
+                <SVGCreator iconName="triangle" width={13} height={7} />
+              </div>
+            </FormInput>
+            <FormInput
+              label="Amount of pages"
+              type="number"
+              name="pages"
+              value={pages}
+              min="1"
+              max={pagesRemained}
+              onChange={onInputChange}
+              generalStyle={styles.box}
+              labelStyle={styles.label}
+              inputStyle={styles.input}
+            />
+            <ButtonUniversal
+              type="submit"
+              text="Add result"
+              btnStyles={styles.btn}
+              onClick={resetSelect}
+            />
+          </form>
+        </>
+      ) : null}
       <h2 className={styles.subHeader}>Statistics</h2>
       {results ? <ArchiveResults items={results} /> : null}
     </div>
@@ -109,7 +128,6 @@ TrainingResults.defaultProps = {
 
 TrainingResults.propTypes = {
   start: PropTypes.string.isRequired,
-  finish: PropTypes.string.isRequired,
   onSubmit: PropTypes.func,
 };
 

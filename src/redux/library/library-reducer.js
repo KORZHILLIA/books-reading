@@ -51,6 +51,9 @@ const loadingReducer = createReducer(false, (builder) =>
     .addCase(libraryActions.relocateBookFromPresentToFutureRequest, () => true)
     .addCase(libraryActions.relocateBookFromPresentToFutureSuccess, () => false)
     .addCase(libraryActions.relocateBookFromPresentToFutureError, () => false)
+    .addCase(libraryActions.resumeRequest, () => true)
+    .addCase(libraryActions.resumeSuccess, () => false)
+    .addCase(libraryActions.resumeError, () => false)
 );
 
 const errorReducer = createReducer(null, (builder) =>
@@ -76,6 +79,9 @@ const errorReducer = createReducer(null, (builder) =>
       libraryActions.relocateBookFromPresentToFutureError,
       (_, { payload }) => payload
     )
+    .addCase(libraryActions.resumeRequest, () => null)
+    .addCase(libraryActions.resumeSuccess, () => null)
+    .addCase(libraryActions.resumeError, (_, { payload }) => payload)
 );
 
 // const booksPersistConfig = {

@@ -15,3 +15,11 @@ export const cleanError = createAction("training/clean/error");
 export const addResultRequest = createAction("training/addResult/request");
 export const addResultSuccess = createAction("training/addResult/success");
 export const addResultError = createAction("training/addResult/error");
+
+export const makeInactiveRequest = createAction(
+  "training/makeInactive/request"
+);
+export const makeInactiveSuccess = createAction(
+  "training/makeInactive/success"
+);
+export const makeInactiveError = createAction("training/makeInactive/error");

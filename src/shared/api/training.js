@@ -1,4 +1,5 @@
 import { instance } from "./auth";
+import { getAll } from "./library";
 
 export const check = async () => {
   const { data } = await instance("/training/check");
@@ -11,12 +12,19 @@ export const add = async (trainingData) => {
 };
 
 export const remove = async () => {
-  const { data } = await instance.post("/training/remove");
-  return data;
+  const { data: trainingData } = await instance.post("/training/remove");
+  const { data: booksData } = await instance.get("books/getAll");
+  const { training } = trainingData;
+  const { books } = booksData;
+  return { books, training };
 };
 
 export const addResult = async (resultData) => {
   const { data } = await instance.post("/training/addresult", resultData);
-  console.log(data);
   return data;
+};
+
+export const makeInactive = async () => {
+  const { data } = await instance.patch("training/stop");
+  return data.training;
 };

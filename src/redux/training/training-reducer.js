@@ -7,6 +7,7 @@ const contentReducer = createReducer(null, (builder) =>
     .addCase(trainingActions.addNewSuccess, (_, { payload }) => payload)
     .addCase(trainingActions.cleanSuccess, (_, { payload }) => payload)
     .addCase(trainingActions.addResultSuccess, (_, { payload }) => payload)
+    .addCase(trainingActions.makeInactiveSuccess, (_, { payload }) => payload)
 );
 
 const loadingReducer = createReducer(false, (builder) =>
@@ -23,6 +24,9 @@ const loadingReducer = createReducer(false, (builder) =>
     .addCase(trainingActions.addResultRequest, () => true)
     .addCase(trainingActions.addResultSuccess, () => false)
     .addCase(trainingActions.addResultError, () => false)
+    .addCase(trainingActions.makeInactiveRequest, () => true)
+    .addCase(trainingActions.makeInactiveSuccess, () => false)
+    .addCase(trainingActions.makeInactiveError, () => false)
 );
 
 const errorReducer = createReducer(null, (builder) =>
@@ -39,6 +43,9 @@ const errorReducer = createReducer(null, (builder) =>
     .addCase(trainingActions.addResultRequest, () => null)
     .addCase(trainingActions.addResultSuccess, () => null)
     .addCase(trainingActions.addResultError, (_, { payload }) => payload)
+    .addCase(trainingActions.makeInactiveRequest, () => null)
+    .addCase(trainingActions.makeInactiveSuccess, () => null)
+    .addCase(trainingActions.makeInactiveError, (_, { payload }) => payload)
 );
 
 const trainingReducer = combineReducers({

@@ -5,6 +5,10 @@
   padding: 20px;
   padding-bottom: 40px;
   background-color: $clr-white;
+
+  @include mq(tablet) {
+    min-width: 350px;
+  }
 }
 
 .ratingHeader,

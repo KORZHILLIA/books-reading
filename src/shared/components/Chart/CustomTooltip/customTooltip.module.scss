@@ -1,0 +1,8 @@
+@import "../../../../styles/base/variables";
+
+.general {
+  max-width: 200px;
+  padding: 5px;
+  border: 1px solid $clr-accent;
+  background-color: $clr-white;
+}

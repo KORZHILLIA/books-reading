@@ -12,7 +12,10 @@ import InfoWindow from "../../shared/components/InfoWindow";
 import AddBtn from "../../shared/components/AddBtn";
 import AddBookFormWindow from "../../modules/AddBookFormWindow";
 import ResumeWindow from "../../modules/ResumeWindow";
-import { getAllBooks } from "../../redux/library/library-operations";
+import {
+  getAllBooks,
+  changeBookResume,
+} from "../../redux/library/library-operations";
 import {
   addNewBook,
   removeNewBook,
@@ -26,6 +29,7 @@ const HomePage = () => {
   const [isAddBtnVisible, setIsAddBtnVisible] = useState(false);
   const [isFormWindowVisible, setIsFormWindowVisible] = useState(false);
   const [isResumeWindowOpen, setIsResumeWindowOpen] = useState(false);
+  const [bookId, setBookId] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -63,20 +67,21 @@ const HomePage = () => {
     }
   };
 
-  const showResumeWindow = () => {
+  const showResumeWindow = (bookId) => {
+    setBookId(bookId);
     openResumeWindow();
     openModal();
   };
 
-  const saveResume = (resumeData) => {
-    closeModal();
+  const hideResumeWindow = () => {
+    setBookId(null);
     closeResumeWindow();
-    console.log(resumeData);
+    closeModal();
   };
 
-  const hideResumeWindow = () => {
-    closeResumeWindow();
-    closeModal();
+  const saveResume = (resumeData) => {
+    dispatch(changeBookResume(bookId, resumeData));
+    hideResumeWindow();
   };
 
   return (
@@ -129,7 +134,11 @@ const HomePage = () => {
         <InfoWindow text={error} onClick={closeModal} />
       ) : null}
       {!error && isResumeWindowOpen && isModalOpen ? (
-        <ResumeWindow onBackClick={hideResumeWindow} onSaveClick={saveResume} />
+        <ResumeWindow
+          bookId={bookId}
+          onBackClick={hideResumeWindow}
+          onSaveClick={saveResume}
+        />
       ) : null}
     </main>
   );
