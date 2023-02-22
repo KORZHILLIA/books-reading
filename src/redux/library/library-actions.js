@@ -35,3 +35,5 @@ export const relocateBookFromPresentToFutureError = createAction(
 export const resumeRequest = createAction("library/resume/request");
 export const resumeSuccess = createAction("library/resume/success");
 export const resumeError = createAction("library/resume/error");
+
+export const clearLibraryError = createAction("library/clearError");

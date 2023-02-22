@@ -3,7 +3,7 @@ import styles from "./myGoals.module.scss";
 
 const MyGoals = ({ books, times, isTrainingActive }) => {
   const [start, finish] = times;
-  const diff = new Date(finish) - new Date(start);
+  const diff = new Date(finish) - new Date(start) + (isTrainingActive ? 0 : 1);
   const interval = Math.ceil(diff / 1000 / 3600 / 24);
   const days = !interval || interval < 0 ? 0 : interval;
 

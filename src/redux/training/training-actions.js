@@ -23,3 +23,5 @@ export const makeInactiveSuccess = createAction(
   "training/makeInactive/success"
 );
 export const makeInactiveError = createAction("training/makeInactive/error");
+
+export const clearTrainingError = createAction("training/clearError");

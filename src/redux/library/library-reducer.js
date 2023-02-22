@@ -82,6 +82,7 @@ const errorReducer = createReducer(null, (builder) =>
     .addCase(libraryActions.resumeRequest, () => null)
     .addCase(libraryActions.resumeSuccess, () => null)
     .addCase(libraryActions.resumeError, (_, { payload }) => payload)
+    .addCase(libraryActions.clearLibraryError, () => null)
 );
 
 // const booksPersistConfig = {

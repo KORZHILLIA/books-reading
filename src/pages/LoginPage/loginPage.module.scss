@@ -2,6 +2,7 @@
 @import "../../styles/utils/mixins";
 
 .general {
+  min-height: 100vh;
   @include flex(flex-start, center, column);
 }
 

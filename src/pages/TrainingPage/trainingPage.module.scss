@@ -8,6 +8,31 @@
   background-color: $clr-body-bg;
 }
 
+.general {
+  @include mq(desktop) {
+    @include flex(flex-start, flex-start);
+    column-gap: 32px;
+  }
+}
+
+.generalFilled {
+  @extend .general;
+  align-items: flex-end;
+}
+
+.leftPart {
+  @include mq(desktop) {
+    @include flex(space-between, stretch, column);
+    width: 100%;
+  }
+}
+
+.rightPart {
+  @include mq(desktop) {
+    @include flex(space-between, center, column);
+  }
+}
+
 .btn {
   position: absolute;
   bottom: 20px;

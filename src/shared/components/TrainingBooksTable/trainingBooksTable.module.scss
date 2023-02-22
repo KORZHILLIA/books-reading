@@ -1,9 +1,18 @@
 @import "../../../styles/base/variables";
 @import "../../../styles/utils/mixins";
 
+.general {
+  // margin-bottom: 40px;
+  margin: 40px 0;
+
+  @include mq(desktop) {
+    max-height: 248px;
+    overflow: auto;
+  }
+}
+
 .table {
   width: 100%;
-  margin: 40px 0;
   border-top: 2px solid $clr-gray-header;
   border-bottom: 2px solid $clr-gray-header;
   background-color: transparent;

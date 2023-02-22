@@ -46,7 +46,9 @@ const ActiveTrainingBooks = ({ books }) => {
         <td className={styles.titleCell}>{title}</td>
         <td className={styles.authorCell}>{author}</td>
         <td className={styles.yearCell}>{year}</td>
-        <td className={styles.pagesCell}>{pages}</td>
+        <td colSpan={2} className={styles.pagesCell}>
+          {pages}
+        </td>
       </tr>
     )
   );

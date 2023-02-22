@@ -1,3 +1,16 @@
-.label {
-  color: red;
+@import "../../../styles/base/variables";
+@import "../../../styles/utils/mixins";
+
+.general {
+  margin-bottom: 32px;
+  padding: 20px 0;
+  background-color: $clr-white;
+  box-shadow: $shadow-header;
+
+  @include mq(tablet) {
+    padding: 40px;
+  }
+  @include mq(desktop) {
+    margin-bottom: 0;
+  }
 }

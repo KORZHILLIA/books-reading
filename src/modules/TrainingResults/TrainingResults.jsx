@@ -43,7 +43,7 @@ const TrainingResults = ({ start, onSubmit }) => {
   const requiredBook = training?.content.books.find((el) => el._id === bookId);
   const pagesTotal = requiredBook?.pages;
 
-  const pagesRemained = pagesTotal - pagesRead;
+  const pagesRemained = pagesTotal - pagesRead || 0;
 
   const selectorElements = presentBooks.map(({ _id, title }) => (
     <option key={_id} value={_id}>

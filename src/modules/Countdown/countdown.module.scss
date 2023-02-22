@@ -15,7 +15,13 @@
 .countdown {
   @include flex();
   padding: 8px 0;
+  background-color: $clr-white;
   box-shadow: $shadow-goals;
+
+  @include mq(desktop) {
+    margin: 0 auto;
+    max-width: 500px;
+  }
 }
 
 .item {

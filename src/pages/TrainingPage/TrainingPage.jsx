@@ -8,7 +8,6 @@ import ActiveTrainingBooks from "../../modules/ActiveTrainingBooks";
 import Countdown from "../../modules/Countdown/Countdown";
 import TrainingResults from "../../modules/TrainingResults";
 import Chart from "../../shared/components/Chart";
-import Spinner from "../../shared/components/Spinner";
 import InfoWindow from "../../shared/components/InfoWindow";
 import ConfirmWindow from "../../shared/components/ConfirmWindow";
 import FinishedTrainingWindow from "../../modules/FinishedTrainingWindow";
@@ -16,7 +15,6 @@ import ButtonUniversal from "../../shared/components/ButtonUniversal";
 import {
   relocateBookFromFutureToPresent,
   relocateBookFromPresentToFuture,
-  getAllBooks,
 } from "../../redux/library/library-operations";
 import librarySelectors from "../../redux/library/library-selectors";
 import trainingSelectors from "../../redux/training/training-selectors";
@@ -29,6 +27,7 @@ import {
 } from "../../redux/training/training-operations";
 import makeFullTime from "../../helpers/makeFullTime";
 import { clearLS } from "../../helpers/LSHandling";
+import useBreakpoints from "../../shared/hooks/useBreakpoints";
 import styles from "./trainingPage.module.scss";
 
 const TrainingPage = () => {
@@ -41,20 +40,14 @@ const TrainingPage = () => {
 
   const [start, finish] = trainingTimes;
 
-  const { loading: libraryLoading, error: libraryError } = useSelector(
-    librarySelectors.library
-  );
   const presentBooks = useSelector(librarySelectors.libraryPresent);
-  const {
-    content: training,
-    loading: trainingLoading,
-    error: trainingError,
-  } = useSelector(trainingSelectors.training);
+  const { content: training } = useSelector(trainingSelectors.training);
   const isTrainingActive = training?.isActive;
   const isTrainingFinished = training?.isFinished;
 
   const dispatch = useDispatch();
   const isFirstRender = useRef(true);
+  const { bigger1280px } = useBreakpoints();
 
   const closeModal = () => setIsModalOpen(false);
 
@@ -143,11 +136,7 @@ const TrainingPage = () => {
   };
 
   useEffect(() => {
-    if (
-      libraryError ||
-      trainingError ||
-      (isTrainingFinished && isTrainingActive)
-    ) {
+    if (isTrainingFinished && isTrainingActive) {
       setIsModalOpen(true);
     }
     if (isTrainingFinished && !isTrainingActive) {
@@ -158,13 +147,7 @@ const TrainingPage = () => {
       dispatch(checkCurrentTraining());
       isFirstRender.current = false;
     }
-  }, [
-    dispatch,
-    libraryError,
-    trainingError,
-    isTrainingActive,
-    isTrainingFinished,
-  ]);
+  }, [dispatch, isTrainingActive, isTrainingFinished]);
 
   return (
     <main className={styles.main}>
@@ -177,48 +160,57 @@ const TrainingPage = () => {
             btnStyles={styles.clearBtn}
           />
         ) : null}
-        {training && !isTrainingFinished ? (
-          <Countdown
-            start={training.start}
-            finish={training.finish}
-            startTraining={activateTrainingStart}
-          />
-        ) : null}
-        <MyGoals
-          isTrainingActive={isTrainingActive}
-          books={!training ? presentBooks : training.books}
-          times={!training ? trainingTimes : [training.start, training.finish]}
-        />
-        {!training ? (
-          <TrainingInterval
-            setBtn={setStartBtn}
-            setTimes={defineTrainingTimes}
-          />
-        ) : null}
-        {!training ? (
-          <TrainingBooksSelector onSubmit={addBookToPresentList} />
-        ) : null}
-        {!training ? (
-          <TrainingBooks onCloseBtnClick={addBookToFutureList} />
-        ) : (
-          <ActiveTrainingBooks books={training.books} />
-        )}
-        {training ? <Chart /> : null}
-        {training && (isTrainingStarted || isTrainingFinished) ? (
-          <TrainingResults start={training?.start} onSubmit={addResult} />
-        ) : null}
+        <div className={training ? styles.generalFilled : styles.general}>
+          <div className={styles.leftPart}>
+            {training && !isTrainingFinished ? (
+              <Countdown
+                start={training.start}
+                finish={training.finish}
+                startTraining={activateTrainingStart}
+              />
+            ) : null}
+            {!bigger1280px ? (
+              <MyGoals
+                isTrainingActive={isTrainingActive}
+                books={!training ? presentBooks : training.books}
+                times={
+                  !training ? trainingTimes : [training.start, training.finish]
+                }
+              />
+            ) : null}
+            {!training ? (
+              <TrainingInterval
+                setBtn={setStartBtn}
+                setTimes={defineTrainingTimes}
+              />
+            ) : null}
+            {!training ? (
+              <TrainingBooksSelector onSubmit={addBookToPresentList} />
+            ) : null}
+            {!training ? (
+              <TrainingBooks onCloseBtnClick={addBookToFutureList} />
+            ) : (
+              <ActiveTrainingBooks books={training.books} />
+            )}
+            {training ? <Chart /> : null}
+          </div>
+          <div className={styles.rightPart}>
+            {bigger1280px ? (
+              <MyGoals
+                isTrainingActive={isTrainingActive}
+                books={!training ? presentBooks : training.books}
+                times={
+                  !training ? trainingTimes : [training.start, training.finish]
+                }
+              />
+            ) : null}
+            {training && (isTrainingStarted || isTrainingFinished) ? (
+              <TrainingResults start={training?.start} onSubmit={addResult} />
+            ) : null}
+          </div>
+        </div>
       </div>
-      {libraryLoading || trainingLoading ? <Spinner /> : null}
-      {(libraryError || trainingError) && isModalOpen ? (
-        <InfoWindow
-          text={libraryError ? libraryError : trainingError}
-          onClick={closeModal}
-        />
-      ) : null}
-      {!isTrainingReady &&
-      !isTrainingStarted &&
-      !trainingError &&
-      isModalOpen ? (
+      {!isTrainingReady && !isTrainingStarted && isModalOpen ? (
         <InfoWindow
           text="Finish date must be after start date"
           onClick={closeModal}
@@ -227,8 +219,6 @@ const TrainingPage = () => {
       {isTrainingReady &&
       !clearTraining &&
       !isTrainingFinished &&
-      !trainingError &&
-      !libraryError &&
       isModalOpen ? (
         <ConfirmWindow
           text="Are you sure? You won't be able to change training conditions!"

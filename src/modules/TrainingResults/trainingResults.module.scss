@@ -4,9 +4,13 @@
 .general {
   padding: 20px;
   background-color: $clr-white;
+  box-shadow: $shadow-header;
 
-  @include mq(tablet) {
+  @include mq(tablet-only) {
     padding: 32px 96px;
+  }
+  @include mq(desktop) {
+    min-width: 280px;
   }
 }
 

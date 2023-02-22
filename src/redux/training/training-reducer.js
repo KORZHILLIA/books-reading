@@ -46,6 +46,7 @@ const errorReducer = createReducer(null, (builder) =>
     .addCase(trainingActions.makeInactiveRequest, () => null)
     .addCase(trainingActions.makeInactiveSuccess, () => null)
     .addCase(trainingActions.makeInactiveError, (_, { payload }) => payload)
+    .addCase(trainingActions.clearTrainingError, () => null)
 );
 
 const trainingReducer = combineReducers({

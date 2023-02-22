@@ -15,7 +15,7 @@ export const signupNewUser = (userData) => {
       dispatch(authActions.signupSuccess(data));
     } catch (error) {
       const { message } = error.response.data;
-      dispatch(authActions.signupError({ message }));
+      dispatch(authActions.signupError(message));
     }
   };
   return func;
@@ -29,7 +29,7 @@ export const verifyUser = (verificationToken) => {
       dispatch(authActions.verifySuccess(data));
     } catch (error) {
       const { message } = error.response.data;
-      dispatch(authActions.verifyError({ message }));
+      dispatch(authActions.verifyError(message));
     }
   };
   return func;
@@ -43,7 +43,7 @@ export const loginUser = (userData) => {
       dispatch(authActions.loginSuccess(data));
     } catch (error) {
       const { message } = error.response.data;
-      dispatch(authActions.loginError({ message }));
+      dispatch(authActions.loginError(message));
     }
   };
   return func;

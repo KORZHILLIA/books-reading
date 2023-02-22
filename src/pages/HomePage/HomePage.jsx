@@ -7,8 +7,6 @@ import ButtonUniversal from "../../shared/components/ButtonUniversal";
 import AlreadyRead from "../../modules/AlreadyRead";
 import GoingToRead from "../../modules/GoingToRead";
 import ReadingNow from "../../modules/ReadingNow";
-import Spinner from "../../shared/components/Spinner";
-import InfoWindow from "../../shared/components/InfoWindow";
 import AddBtn from "../../shared/components/AddBtn";
 import AddBookFormWindow from "../../modules/AddBookFormWindow";
 import ResumeWindow from "../../modules/ResumeWindow";
@@ -34,7 +32,6 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error } = useSelector(librarySelectors.library);
   const futureBooks = useSelector(librarySelectors.libraryFuture);
   const presentBooks = useSelector(librarySelectors.libraryPresent);
   const pastBooks = useSelector(librarySelectors.libraryPast);
@@ -55,17 +52,9 @@ const HomePage = () => {
   const addBook = (book) => dispatch(addNewBook(book));
   const addBookFromWindow = (book) => {
     dispatch(addNewBook(book));
-    setIsFormWindowVisible(false);
+    closeFormWindow();
   };
   const deleteBook = (bookId) => dispatch(removeNewBook(bookId));
-
-  const scrollHandler = ({ target }) => {
-    if (target.scrollTop >= 106 && !isFormOpen) {
-      setIsAddBtnVisible(true);
-    } else {
-      setIsAddBtnVisible(false);
-    }
-  };
 
   const showResumeWindow = (bookId) => {
     setBookId(bookId);
@@ -83,9 +72,8 @@ const HomePage = () => {
     dispatch(changeBookResume(bookId, resumeData));
     hideResumeWindow();
   };
-
   return (
-    <main className={styles.main} onScroll={scrollHandler}>
+    <main className={styles.main}>
       <div className="container">
         <ButtonUniversal
           type="button"
@@ -118,8 +106,7 @@ const HomePage = () => {
           />
         ) : null}
       </div>
-      {loading ? <Spinner /> : null}
-      {!error && !isResumeWindowOpen && isModalOpen ? (
+      {!isResumeWindowOpen && isModalOpen ? (
         <HowToUseWindow onClick={closeModal} />
       ) : null}
       <AddBtn onClick={openFormWindow} isVisible={isAddBtnVisible} />
@@ -130,10 +117,7 @@ const HomePage = () => {
           onSubmit={addBookFromWindow}
         />
       ) : null}
-      {error && isModalOpen ? (
-        <InfoWindow text={error} onClick={closeModal} />
-      ) : null}
-      {!error && isResumeWindowOpen && isModalOpen ? (
+      {isResumeWindowOpen && isModalOpen ? (
         <ResumeWindow
           bookId={bookId}
           onBackClick={hideResumeWindow}

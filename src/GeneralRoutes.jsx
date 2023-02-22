@@ -12,7 +12,7 @@ const TrainingPage = lazy(() => import("./pages/TrainingPage"));
 
 const GeneralRoutes = () => {
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<IntroPage />} />
         <Route element={<PublicRoute />}>

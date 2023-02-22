@@ -50,7 +50,7 @@ const userReducer = createReducer(initialState, (builder) =>
       const { name, email, token, isVerified } = payload;
       return { ...store, name, email, token, isVerified, isLoggedIn: true };
     })
-    .addCase(authActions.logoutSuccess, (store) => initialState)
+    .addCase(authActions.logoutSuccess, () => initialState)
 );
 
 const loadingReducer = createReducer(false, (builder) =>

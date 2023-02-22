@@ -1,12 +1,19 @@
 @import "../../styles/base/variables";
 @import "../../styles/utils/mixins";
 
-.list {
-  margin-top: 4px;
+// .list {
+//   margin-top: 4px;
 
-  @include mq(tablet-only) {
-    width: 240px;
-    margin: 4px auto 0;
+//   @include mq(tablet-only) {
+//     width: 240px;
+//     margin: 4px auto 0;
+//   }
+// }
+.general {
+  max-height: 192px;
+  overflow: auto;
+  @include mq(desktop) {
+    max-height: 120px;
   }
 }
 

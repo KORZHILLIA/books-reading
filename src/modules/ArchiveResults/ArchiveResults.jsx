@@ -17,9 +17,11 @@ const ArchiveResults = ({ items }) => {
   });
 
   return (
-    <table className={styles.table}>
-      <tbody>{elements}</tbody>
-    </table>
+    <div className={styles.general}>
+      <table className={styles.table}>
+        <tbody>{elements}</tbody>
+      </table>
+    </div>
   );
 };
 

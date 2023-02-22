@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Label } from "recharts";
-import PropTypes from "prop-types";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CustomTooltip from "./CustomTooltip";
 import trainingSelectors from "../../../redux/training/training-selectors";
@@ -19,7 +18,7 @@ const Chart = () => {
   const planPages = Math.round(totalPages / (days + 1));
 
   const defineChartWidth = () => {
-    return bigger1280px ? 810 : bigger768px ? 704 : 280;
+    return bigger1280px ? 810 : bigger768px ? 600 : 240;
   };
 
   const daysInResults = content.results
@@ -28,45 +27,62 @@ const Chart = () => {
       return day;
     })
     .filter((day, idx, arr) => arr.indexOf(day) === idx);
-  const preparedData = daysInResults.map((day) => {
-    const totalDayPages = content.results.reduce((acc, { date, pages }) => {
-      return date.includes(day) ? acc + pages : acc;
-    }, 0);
-    return { date: day, pages: totalDayPages, planPages };
-  });
 
-  const fullData = [...preparedData, { date: preparedFinish, planPages }];
+  const preparedData = daysInResults
+    .map((day) => {
+      const totalDayPages = content.results.reduce((acc, { date, pages }) => {
+        return date.includes(day) ? acc + pages : acc;
+      }, 0);
+      return { date: day, pages: totalDayPages, planPages };
+    })
+    .sort((result1, result2) => (result1.date > result2.date ? 1 : -1));
+
+  const isLastDayPresentsInResults = content.results.some(({ date }) =>
+    date.includes(preparedFinish)
+  );
+
+  const fullData = content.results.length
+    ? [
+        ...preparedData,
+        !isLastDayPresentsInResults && { date: preparedFinish, planPages },
+      ]
+    : [
+        { date: preparedStart, planPages },
+        { date: preparedFinish, planPages },
+      ];
 
   return (
-    <LineChart width={defineChartWidth()} height={280} data={fullData}>
-      <Line type="monotone" dataKey="pages" stroke="#4735af" />
-      <Line
-        type="monotone"
-        dataKey="planPages"
-        stroke="#f25137"
-        connectNulls={true}
-        dot={false}
-      />
-      <XAxis dataKey="date" tick={false}>
-        <Label
-          value="TIME"
-          position="insideBottomRight"
-          offset={10}
-          stroke="#242A37"
-          strokeWidth={0.3}
+    <div className={styles.general}>
+      <LineChart width={defineChartWidth()} height={280} data={fullData}>
+        <Line type="monotone" dataKey="pages" stroke="#4735af" />
+        <Line
+          type="monotone"
+          dataKey="planPages"
+          stroke="#f25137"
+          connectNulls={true}
         />
-      </XAxis>
-      <YAxis tick={false} mirror={true}>
-        <Label
-          value="PAGES"
-          position="insideTop"
-          offset={10}
-          stroke="#242A37"
-          strokeWidth={0.3}
-        />
-      </YAxis>
-      <Tooltip content={<CustomTooltip />} />
-    </LineChart>
+        <XAxis dataKey="date">
+          <Label
+            value="TIME"
+            position="bottom"
+            offset={-5}
+            stroke="#242A37"
+            strokeWidth={0.3}
+          />
+        </XAxis>
+        <YAxis>
+          <Label
+            value="PAGES"
+            position="top"
+            offset={-120}
+            angle={-90}
+            stroke="#242A37"
+            strokeWidth={0.3}
+          />
+        </YAxis>
+        <Tooltip content={<CustomTooltip />} />
+      </LineChart>
+    </div>
   );
 };
 
