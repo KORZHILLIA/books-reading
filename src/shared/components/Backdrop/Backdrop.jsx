@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import styles from "./backdrop.module.scss";
@@ -6,18 +6,22 @@ import styles from "./backdrop.module.scss";
 const backdrop = document.getElementById("backdrop");
 
 const Backdrop = ({ children, close }) => {
-  const handleClose = (event) => {
-    if (!close) {
-      return;
-    }
-    if (event.target === event.currentTarget) {
-      close();
-      return;
-    }
-    if (event.code === "Escape") {
-      close();
-    }
-  };
+  const handleClose = useCallback(
+    (event) => {
+      if (!close) {
+        return;
+      }
+      if (event.target === event.currentTarget) {
+        close();
+        return;
+      }
+      if (event.code === "Escape") {
+        close();
+      }
+    },
+    [close]
+  );
+
   useEffect(() => {
     if (close) {
       document.addEventListener("keydown", handleClose);
