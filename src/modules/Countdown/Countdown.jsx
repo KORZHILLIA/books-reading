@@ -24,7 +24,7 @@ const Countdown = ({ start, finish, startTraining }) => {
       1000
     );
     return () => clearInterval(timeId);
-  }, [ms, initialTime, isTrainingStarted]);
+  }, [ms, initialTime, isTrainingStarted, startTraining]);
 
   return (
     <div className={styles.general}>

@@ -24,7 +24,7 @@ import styles from "./homePage.module.scss";
 const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isAddBtnVisible, setIsAddBtnVisible] = useState(false);
+  const [isAddBtnVisible] = useState(false);
   const [isFormWindowVisible, setIsFormWindowVisible] = useState(false);
   const [isResumeWindowOpen, setIsResumeWindowOpen] = useState(false);
   const [bookId, setBookId] = useState(null);

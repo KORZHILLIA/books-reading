@@ -23,7 +23,7 @@ const Backdrop = ({ children, close }) => {
       document.addEventListener("keydown", handleClose);
       return () => document.removeEventListener("keydown", handleClose);
     }
-  }, []);
+  }, [close, handleClose]);
   return createPortal(
     <div className={styles.backdrop} onClick={handleClose}>
       <div className={styles.inner}>{children}</div>

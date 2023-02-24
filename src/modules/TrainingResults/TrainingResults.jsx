@@ -10,7 +10,7 @@ import trainingSelectors from "../../redux/training/training-selectors";
 import styles from "./trainingResults.module.scss";
 
 const TrainingResults = ({ start, onSubmit }) => {
-  const today = useMemo(() => new Date().toISOString().slice(0, 10), [start]);
+  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const initialState = {
     bookId: "",
     date: today,

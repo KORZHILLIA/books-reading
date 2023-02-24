@@ -1,5 +1,4 @@
 import { instance } from "./auth";
-import { getAll } from "./library";
 
 export const check = async () => {
   const { data } = await instance("/training/check");

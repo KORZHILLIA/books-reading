@@ -2,7 +2,7 @@ import styles from "./customTooltip.module.scss";
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
-    const { payload: dataContent, value, name } = payload[0];
+    const { payload: dataContent, name } = payload[0];
     const { pages, planPages } = dataContent;
     return (
       <div className={styles.general}>

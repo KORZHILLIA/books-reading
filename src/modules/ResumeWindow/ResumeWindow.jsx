@@ -25,7 +25,7 @@ const ResumeWindow = ({ bookId, onBackClick, onSaveClick }) => {
     if (currentResume) {
       setState((prevState) => ({ ...prevState, resume: currentResume }));
     }
-  }, []);
+  }, [currentResume]);
 
   const setRating = (rating) => {
     setState((prevState) => ({ ...prevState, rating }));

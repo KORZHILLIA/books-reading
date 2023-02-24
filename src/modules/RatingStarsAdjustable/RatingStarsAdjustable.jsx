@@ -37,7 +37,7 @@ const RatingStarsAdjustable = ({ bookId, qty, defineRating, activateWarn }) => {
       firstRenderRef.current = false;
     }
     defineRating(rating);
-  }, [rating]);
+  }, [rating, currentRating, defineRating]);
 
   const elements = baseArray.map((_, idx) => (
     <li

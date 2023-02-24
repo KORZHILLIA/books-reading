@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import useBreakpoints from "../../shared/hooks/useBreakpoints";
 import TrainingBooksTable from "../../shared/components/TrainingBooksTable";
 import BookStatusCheckmark from "../../shared/components/BookStatusCheckmark";

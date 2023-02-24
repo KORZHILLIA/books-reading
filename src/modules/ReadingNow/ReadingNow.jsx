@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import useBreakpoints from "../../shared/hooks/useBreakpoints";
 import SVGCreator from "../../shared/components/SVGCreator";
-import CloseBtn from "../../shared/components/CloseBtn";
 import MobileBookItem from "../../shared/components/MobileBookItem";
 import styles from "./readingNow.module.scss";
 

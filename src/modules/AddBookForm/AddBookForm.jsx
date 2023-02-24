@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import PropTypes from "prop-types";
 import useForm from "../../shared/hooks/useForm";
 import FormInput from "../../shared/components/FormInput";
@@ -21,7 +20,7 @@ const AddBookForm = ({ onClose, onSubmit }) => {
   });
   const { title, author, year, pages } = formState;
 
-  const currentYear = useMemo(() => new Date().getFullYear());
+  const currentYear = new Date().getFullYear();
 
   return (
     <form className={styles.form} onSubmit={onFormSubmit}>

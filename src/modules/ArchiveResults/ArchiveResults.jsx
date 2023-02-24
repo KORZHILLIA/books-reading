@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import styles from "./archiveResults.module.scss";
 
 const ArchiveResults = ({ items }) => {
