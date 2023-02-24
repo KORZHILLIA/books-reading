@@ -1,6 +1,5 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
-import Spinner from "./shared/components/Spinner";
 
 const PublicRoute = lazy(() => import("./shared/components/PublicRoute"));
 const PrivateRoute = lazy(() => import("./shared/components/PrivateRoute"));

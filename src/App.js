@@ -60,6 +60,7 @@ function App() {
     }
     dispatch(getCurrentUser(token));
     navigate("/home");
+    // eslint-disable-next-line
   }, [authError, libraryError, trainingError]);
 
   return (

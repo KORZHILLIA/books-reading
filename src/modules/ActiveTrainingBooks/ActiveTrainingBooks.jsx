@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import useBreakpoints from "../../shared/hooks/useBreakpoints";
 import TrainingBooksTable from "../../shared/components/TrainingBooksTable";
 import BookStatusCheckmark from "../../shared/components/BookStatusCheckmark";
-import SVGCreator from "../../shared/components/SVGCreator";
 import styles from "./activeTrainingBooks.module.scss";
 
 const ActiveTrainingBooks = ({ books }) => {
