@@ -39,7 +39,7 @@ const TrainingInterval = ({ setBtn, setTimes }) => {
     } else {
       setBtn(false);
     }
-  }, [start, finish, setBtn, setTimes, state]);
+  }, [start, finish]);
 
   return (
     <div className={styles.general}>

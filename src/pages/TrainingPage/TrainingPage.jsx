@@ -138,10 +138,12 @@ const TrainingPage = () => {
   useEffect(() => {
     if (isTrainingFinished && isTrainingActive) {
       setIsModalOpen(true);
+      return;
     }
     if (isTrainingFinished && !isTrainingActive) {
       setIsTrainingReady(true);
       setIsTrainingStarted(true);
+      return;
     }
     if (isFirstRender.current) {
       dispatch(checkCurrentTraining());
