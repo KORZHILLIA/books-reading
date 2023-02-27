@@ -17,12 +17,18 @@ const useForm = ({
 
   const checkWarnOnBlur = ({ target }) => {
     const { name, value } = target;
-    if (!value) {
+    const isWarnPresent = formState.warns?.includes(name);
+    const { regExp } = patterns[name];
+
+    // if (!value) {
+    //   return;
+    // }
+    if (!value && !isWarnPresent) {
       return;
     }
-    const { regExp } = patterns[name];
-    const isWarnPresent = formState.warns?.includes(name);
-    if (isWarnPresent && regExp.test(value)) {
+    // const { regExp } = patterns[name];
+    // const isWarnPresent = formState.warns?.includes(name);
+    if ((isWarnPresent && !value) || (isWarnPresent && regExp.test(value))) {
       const newWarns = [...formState.warns];
       const requiredIdx = newWarns.indexOf(name);
       newWarns.splice(requiredIdx, 1);

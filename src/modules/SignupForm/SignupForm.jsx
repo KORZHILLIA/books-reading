@@ -74,9 +74,14 @@ const SignupForm = ({ onSubmit }) => {
           <FieldAcceptSign markStyles={styles.accept} />
         ) : null}
         <p
-          className={warns.includes("email") ? styles.warn : styles.warnHidden}
+          className={
+            warns.includes("email")
+              ? styles.passwordWarn
+              : styles.passwordWarnHidden
+          }
         >
-          Top level domain must be 2 to 4 characters
+          Follow regular e-mail address structure(Top level domain must be 2 to
+          4 characters)
         </p>
       </FormInput>
       <FormInput
